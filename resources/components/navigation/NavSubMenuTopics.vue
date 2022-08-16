@@ -1,5 +1,5 @@
 <template>
-    <li class="group-hover:block m-2">
+    <li class="group-hover:block p-2 hover:bg-gray-400">
         <slot>{{ title }}</slot>
     </li>
 </template>

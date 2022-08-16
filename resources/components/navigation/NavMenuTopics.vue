@@ -1,5 +1,5 @@
 <template>
-    <li class="mx-2 uppercase group">
+    <li class="mx-2 uppercase group flow-root relative">
         {{ title }}
         <slot></slot>
     </li>
