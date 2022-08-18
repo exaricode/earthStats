@@ -1,5 +1,5 @@
 <template>
-    <ul class="hidden absolute -left-6 group-hover:block border-black border-2 border-solid
+    <ul class="hidden absolute -left-2 group-hover:block border-black border-2 border-solid
         rounded border-t-0 rounded-t-none">
         <nav-sub-menu-topics v-for="(item, key) in props.subItem" :key="key">
         {{ item }}</nav-sub-menu-topics>
