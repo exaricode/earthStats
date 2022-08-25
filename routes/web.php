@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
+Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWeatherPos']);

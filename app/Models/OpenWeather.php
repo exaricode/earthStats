@@ -41,6 +41,15 @@ class OpenWeather extends Model
 
     public static function getCurrentWeather() {
         $weather = new OpenWeather();
-        return @file_get_contents($weather->api_endpoint_current . 'q=Amsterdam&appid=' . $weather->api_key . '&units=metric');
+        // dd($weather);
+        return @file_get_contents($weather->api_endpoint_current . 'q=Breda&appid=' . $weather->api_key . '&units=metric');
+        // return @file_get_contents('https://api.openweathermap.org/data/2.5/weather?q=Amsterdam&appid=c1849b8f106d74eac9b45962d5a23ae3&units=metric');
+    }
+
+    public static function getCurrentWeatherPos($request) {
+        $weather = new OpenWeather();
+        $lon = $request->longitude;
+        $lat = $request->latitude;
+        return @file_get_contents($weather->api_endpoint_current . 'lon=' . $lon . '&lat=' . $lat . '&appid=' . $weather->api_key . '&units=metric');
     }
 }
