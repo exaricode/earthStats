@@ -11,12 +11,9 @@
                 </div>
                 <div v-if="currentWeather.temp != null && currentWeather.temp !=undefined">
                     <ul>
-                        <li>temp: {{currentWeather.temp.temp}}</li>
-                        <li>max: {{currentWeather.temp.temp_max}}</li>
-                        <li>min: {{currentWeather.temp.temp_min}}</li>
-                        <li>feels: {{currentWeather.temp.feels_like}}</li>
-                        <li>humidity: {{currentWeather.temp.humidity}}</li>
-                        <li>pressure: {{currentWeather.temp.pressure}}</li>
+                        <li>temp: {{currentWeather.temp.temp}} feels: {{currentWeather.temp.feels_like}}</li>
+                        <li>min: {{currentWeather.temp.temp_min}} max: {{currentWeather.temp.temp_max}}</li>
+                        <li>humidity: {{currentWeather.temp.humidity}} pressure: {{currentWeather.temp.pressure}}</li>
                     </ul>    
                 </div>
             </div>
