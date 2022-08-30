@@ -19,14 +19,11 @@
                             display: 'block'}">{{h}}</i>
                 </span>
                 <div id="second" :style="[hand, second]"
-                    class="border-2 border-black border-solid
-                        absolute"></div>
+                    ></div>
                 <div id="minute" :style="[hand, minute]"
-                    class="border-2 border-black border-solid
-                        absolute"></div>
+                    ></div>
                 <div id="hour" :style="[hand, hour]"
-                    class="border-2 border-black border-solid
-                        absolute"></div>
+                    ></div>
             </div>
         </template>
     </container-fieldset>
@@ -66,13 +63,14 @@ const hour = ref({
     height: '25%',
     backgroundColor: 'bg-green-300',
     left: '49%',
-    transform: 'rotateZ(0deg)',
+    transform: 'rotateZ(0deg)'
 });
 
 const hand = ref({
     position: 'absolute',
     top: '50%',
-    transformOrigin: 'center 0px'
+    transformOrigin: 'center 0px',
+    border: '2px solid black'
 });
 
 const timeList = ref([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
@@ -84,33 +82,40 @@ onMounted(() => {
     const currentMinute = computed(() => currentDate.getMinutes());
     const currentSecond = computed(() => currentDate.getSeconds());
 
-    const hourAngle = currentHour.value * 30 + currentMinute.value * 6 / 360 * 30;
-    const minuteAngle = currentMinute.value * 6;
-    const secondAngle = currentSecond.value * 6;
+    let hourAngle = currentHour.value * 30 + currentMinute.value * 6 / 360 * 30 - 180;
+    let minuteAngle = currentMinute.value * 6 - 180;
+    let secondAngle = currentSecond.value * 6 - 180;
 
-   
-    second.value.transform = 'rotateZ(' + secondAngle + 'deg)';
-    minute.value.transform = 'rotateZ(' + minuteAngle + 'deg)';
-    hour.value.transform = 'rotateZ(' + hourAngle + 'deg)';
-    
-    document.getAnimations()[0].effect.target.style.transform = 'rotateZ(' + secondAngle + 'deg)';
-    document.getAnimations()[1].effect.target.style.transform = 'rotateZ(' + secondAngle + 'deg)';
-    document.getAnimations()[2].effect.target.style.transform = 'rotateZ(' + secondAngle + 'deg)';
-    console.log(document.getAnimations()[2].effect.target.style.transform); 
+    second.value.transform = `rotateZ(${secondAngle}deg)`;
+    minute.value.transform = `rotateZ(${minuteAngle}deg)`;
+    hour.value.transform = `rotateZ(${hourAngle}deg)`;
+
+    let secondInterval = setInterval(() => {
+        secondAngle += 6;
+        second.value.transform = `rotateZ(${secondAngle}deg)`;
+    }, 1000);
+
+    let minuteInterval = setInterval(() => {
+        minuteAngle += 6;
+        minute.value.transform = `rotateZ(${minuteAngle}deg)`;
+    }, 1000 * 60);
+
+    let hourInterval = setInterval(() => {
+        hourAngle += 6;
+        hour.value.transform = `rotateZ(${hourAngle}deg)`;
+    }, 1000 * 60 * 60);
 });
-
-
 </script>
 
 <style scoped>
-#clock {
+/* #clock {
   --second: 1s;
   --minute: calc(var(--second) * 60);
   --hour: calc(var(--minute) * 60);
   
-}
+} */
 
-@keyframes rotate {
+/* @keyframes rotate {
   from { transform: rotate(0); }
   to { transform: rotate(1turn); }
 }
@@ -125,7 +130,7 @@ onMounted(() => {
 
 #hour {
     animation: rotate linear calc(var(--hour) * 12) infinite;
-}
+} */
 
 #clock > span::before{
     position: absolute;
