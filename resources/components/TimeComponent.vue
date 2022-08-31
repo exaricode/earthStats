@@ -30,9 +30,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 import ContainerFieldset from './draggable/ContainerFieldset.vue';
+
+const props = defineProps({
+    currentDate: Date,
+    timezone: String
+})
 
 const rotation = ref(30);
 const sizeObject = ref({
@@ -76,7 +81,7 @@ const hand = ref({
 const timeList = ref([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
 onMounted(() => {
-    const currentDate = new Date();
+    const currentDate = props.currentDate;
 
     const currentHour = computed(() => currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours());
     const currentMinute = computed(() => currentDate.getMinutes());
@@ -105,6 +110,12 @@ onMounted(() => {
         hour.value.transform = `rotateZ(${hourAngle}deg)`;
     }, 1000 * 60 * 60);
 });
+
+onUnmounted(() => {
+    clearInterval(secondInterval);
+    clearInterval(minuteInterval);
+    clearInterval(hourInterval);
+})
 </script>
 
 <style scoped>

@@ -7,7 +7,7 @@
             <date-component class="h-full"></date-component>
         </drag-container>
         <drag-container>
-            <time-component class="h-full" ></time-component>
+            <time-component :currentDate="new Date()" class="h-full" ></time-component>
         </drag-container>
         <drag-container>
             <weather-component class="h-full"></weather-component>
