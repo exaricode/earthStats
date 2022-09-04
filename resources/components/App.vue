@@ -4,13 +4,16 @@
     </div>
     <main class="flex flex-wrap">
         <drag-container>
-            <date-component class="h-full"></date-component>
+            <date-component></date-component>
         </drag-container>
         <drag-container>
-            <time-component :currentDate="new Date()" class="h-full" ></time-component>
+            <time-component :currentDate="new Date()"
+                            :timezone="''"
+                            :title="'Local Time'">
+            </time-component>
         </drag-container>
         <drag-container>
-            <weather-component class="h-full"></weather-component>
+            <weather-component></weather-component>
         </drag-container>
     </main>
 </template>

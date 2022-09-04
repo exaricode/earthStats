@@ -1,5 +1,5 @@
 <template>
-    <container-fieldset :legend="'Current Time'">
+    <container-fieldset :legend="title">
         <template #first>
             <div id="clock" :style="sizeObject"
                 class="border-2 border-black border-solid m-auto flow-root relative text-center">
@@ -36,8 +36,13 @@ import ContainerFieldset from './draggable/ContainerFieldset.vue';
 
 const props = defineProps({
     currentDate: Date,
-    timezone: String
-})
+    timezone: String,
+    title: String
+});
+
+let secondInterval;
+let minuteInterval;
+let hourInterval;
 
 const rotation = ref(30);
 const sizeObject = ref({
@@ -48,44 +53,49 @@ const sizeObject = ref({
 });
 
 const second = ref({
-    width: '5px',
+    width: '.5px',
     height: '45%',
-    backgroundColor: 'bg-blue-300',
     left: '49%',
-    transform: 'rotateZ(0deg)'
+    transform: 'rotateZ(0deg)',
+    borderColor: 'red',
 });
 
 const minute = ref({
-    width: '10px',
+    width: '2.5px',
     height: '40%',
-    backgroundColor: 'bg-red-300',
     left: '49%',
-    transform: 'rotateZ(0deg)'
+    transform: 'rotateZ(0deg)',
+    backgroundColor: 'black'
 });
 
 const hour = ref({
-    width: '10px',
+    width: '2.5px',
     height: '25%',
-    backgroundColor: 'bg-green-300',
     left: '49%',
-    transform: 'rotateZ(0deg)'
+    transform: 'rotateZ(0deg)',
+    backgroundColor: 'black'
 });
 
 const hand = ref({
     position: 'absolute',
     top: '50%',
     transformOrigin: 'center 0px',
-    border: '2px solid black'
+    border: '.5px solid black'
 });
 
 const timeList = ref([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
 onMounted(() => {
-    const currentDate = props.currentDate;
+    const currentDate = ref(props.currentDate);
+    
+    if (props.timezone != '') {
+        currentDate.value = new Date(currentDate.value.toLocaleString('en-US', { timeZone : props.timezone } ));
+    }
 
-    const currentHour = computed(() => currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours());
-    const currentMinute = computed(() => currentDate.getMinutes());
-    const currentSecond = computed(() => currentDate.getSeconds());
+    const currentHour = computed(() => currentDate.value.getHours() > 12 ? currentDate.value.getHours() - 12 : currentDate.value.getHours());
+    const currentMinute = computed(() => currentDate.value.getMinutes());
+    const currentSecond = computed(() => currentDate.value.getSeconds());
+
 
     let hourAngle = currentHour.value * 30 + currentMinute.value * 6 / 360 * 30 - 180;
     let minuteAngle = currentMinute.value * 6 - 180;
@@ -95,17 +105,18 @@ onMounted(() => {
     minute.value.transform = `rotateZ(${minuteAngle}deg)`;
     hour.value.transform = `rotateZ(${hourAngle}deg)`;
 
-    let secondInterval = setInterval(() => {
+    secondInterval = setInterval(() => {
         secondAngle += 6;
+        // console.log(secondAngle);
         second.value.transform = `rotateZ(${secondAngle}deg)`;
     }, 1000);
 
-    let minuteInterval = setInterval(() => {
+    minuteInterval = setInterval(() => {
         minuteAngle += 6;
         minute.value.transform = `rotateZ(${minuteAngle}deg)`;
     }, 1000 * 60);
 
-    let hourInterval = setInterval(() => {
+    hourInterval = setInterval(() => {
         hourAngle += 6;
         hour.value.transform = `rotateZ(${hourAngle}deg)`;
     }, 1000 * 60 * 60);

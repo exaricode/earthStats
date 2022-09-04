@@ -18,6 +18,8 @@ return [
                     'resources/css/tailwind.css',
                     'resources/scripts/main.ts',
                     'resources/js/app.js',
+                    'resources/js/clock.js',
+                    'resources/js/weather.js'
                 ],
                 'ignore' => '/\\.(d\\.ts|json)$/',
             ],

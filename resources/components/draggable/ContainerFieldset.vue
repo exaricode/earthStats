@@ -1,5 +1,5 @@
 <template>
-    <fieldset class="flex flex-col items-center">
+    <fieldset class="flex flex-col items-center h-full">
         <legend class="text-center w-full py-1
             border-b-2 border-b-black border-solid"> {{ legend }}</legend>
         

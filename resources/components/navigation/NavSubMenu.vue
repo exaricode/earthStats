@@ -1,7 +1,8 @@
 <template>
     <ul class="hidden absolute -left-2 group-hover:block border-black border-2 border-solid
-        rounded border-t-0 rounded-t-none">
-        <nav-sub-menu-topics v-for="(item, key) in props.subItem" :key="key">
+        rounded rounded-t-none bg-slate-100 z-10">
+        <nav-sub-menu-topics v-for="(item, key) in props.subItem" :key="key"
+            @click.self="changePage(item)">
         {{ item }}</nav-sub-menu-topics>
     </ul>
 </template>
@@ -14,6 +15,15 @@ import { ref } from 'vue';
 const props = defineProps({
     subItem: Array
 });
+
+function changePage(title){
+    console.log(title);
+    const regex = /\s|\W/g; 
+    let tempTitle = title.replace(regex, '').toLowerCase().trim();
+    console.log(tempTitle);
+    //TODO: location url / uncomment line below
+    location.href = import.meta.env.BASE_URL + tempTitle;
+}
 
 </script>
 

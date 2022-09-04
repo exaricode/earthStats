@@ -1,5 +1,9 @@
 import { createApp } from "vue";
+import './clock';
+import './weather';
 
 import App from "../components/App.vue";
 
-createApp(App).mount("#app");
+if ( document.getElementById('app')) {
+    createApp(App).mount("#app");
+} 

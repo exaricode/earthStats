@@ -14,8 +14,28 @@ use App\Http\Controllers\OpenWeatherController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/' , function() {
+    return redirect('/home');
+});
+
+Route::get('/home', function () {
     return view('index');
+});
+
+Route::get('time', function () {
+    return redirect('/worldclock');
+});
+
+Route::get('/worldclock', function () {
+    return view('clock');
+});
+
+Route::get('weather', function () {
+    return view('weather');
+});
+
+Route::get('/local', function () {
+    return redirect('/weather');
 });
 
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
