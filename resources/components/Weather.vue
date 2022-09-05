@@ -23,6 +23,8 @@
                                 :name="'Tokyo'">
             </weather-component>
         </drag-container>
+        <fore-cast-weather-component></fore-cast-weather-component>
+        
     </main>
 </template>
 
@@ -30,6 +32,7 @@
 import NavBar from './navigation/NavBar.vue';
 import DragContainer from './draggable/DragContainer.vue';
 import WeatherComponent from './WeatherComponent.vue';
+import ForeCastWeatherComponent from './ForeCastWeatherComponent.vue';
 
 </script>
 

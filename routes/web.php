@@ -42,3 +42,4 @@ Route::get('/local', function () {
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
 Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWeatherPos']);
 Route::post('getCurrentWeatherPlace', [OpenWeatherController::class, 'getCurrentWeatherPlace']);
+Route::post('getForeCastWeather', [OpenWeatherController::class, 'getForeCastWeather']);

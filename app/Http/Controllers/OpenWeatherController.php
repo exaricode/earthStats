@@ -21,4 +21,8 @@ class OpenWeatherController extends Controller
         $place = $request->place;
         return OpenWeather::getCurrentWeatherPlace($place);
     }
+
+    public static function getForeCastWeather() {
+        return OpenWeather::getForeCastWeather();
+    }
 }

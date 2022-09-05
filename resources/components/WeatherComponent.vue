@@ -24,6 +24,9 @@
                 :src="currentWeather.imagePath"
                 alt=""
                 class="inline hover:scale-125" />
+                <img src="../images/windforce.svg" :style="{
+                    width: '20%'
+                }" />
             </div>
         </template>
     </container-fieldset>
@@ -52,7 +55,7 @@ const currentWeather = reactive({
     id: null,
     name: null,
     cod: null,
-    imagePath: null
+    imagePath: setWeatherImage('unknown')
 });
 
 onMounted(async () => {

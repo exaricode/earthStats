@@ -54,4 +54,8 @@ class OpenWeather extends Model
         $weather = new OpenWeather();
         return @file_get_contents($weather->api_endpoint_current . 'q=' . $place . '&appid=' . $weather->api_key . '&units=metric');
     }
+
+    public static function getForeCastWeather() {
+        return @file_get_contents('http://api.openweathermap.org/data/2.5/forecast?q=Breda&appid=c1849b8f106d74eac9b45962d5a23ae3&units=metric');
+    }
 }
