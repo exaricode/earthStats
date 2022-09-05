@@ -12,7 +12,7 @@ const props = defineProps({
 })
 
 function changePage(title) {
-    location.href = import.meta.env.BASE_URL + title.toLowerCase();
+    location.href = import.meta.env.VITE_BASE_URL + ':' + import.meta.env.VITE_PORT + '/' + title.toLowerCase();
 }
 </script>
 

@@ -3,8 +3,7 @@
         <container-fieldset :legend="'Current Date'">
             <template #first>
                 <div> {{ day }} </div>
-            </template>
-            <template #second>
+            
                 <div> {{ today + ' ' + month + ' ' + year}} </div>
             </template>
         </container-fieldset>

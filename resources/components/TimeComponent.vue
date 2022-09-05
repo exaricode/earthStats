@@ -30,7 +30,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import ContainerFieldset from './draggable/ContainerFieldset.vue';
 
 const props = defineProps({
-    currentDate: Date,
     timezone: String,
     title: String
 });
@@ -81,7 +80,7 @@ const hand = ref({
 const timeList = ref([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
 onMounted(() => {
-    const currentDate = ref(props.currentDate);
+    const currentDate = ref(new Date());
     
     if (props.timezone != '') {
         currentDate.value = new Date(currentDate.value.toLocaleString('en-US', { timeZone : props.timezone } ));

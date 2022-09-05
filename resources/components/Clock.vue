@@ -4,27 +4,23 @@
     </div>
     <main class="flex flex-wrap">
         <drag-container>
-            <time-component :currentDate="new Date()"
-                            :timezone="''"
+            <time-component :timezone="''"
                             :title="'Local Time'">
             </time-component>
         </drag-container>
         <drag-container>
-            <time-component :currentDate="new Date()"
-                            :title="'New York'"
+            <time-component :title="'New York'"
                             :timezone="'America/New_York'">
             </time-component>
         </drag-container>
         <drag-container>
-            <time-component :currentDate="new Date()"
-                            :title="'London'"
+            <time-component :title="'London'"
                             :timezone="'Europe/London'">
 
             </time-component>
         </drag-container>
         <drag-container>
-            <time-component :currentDate="new Date()"
-                            :title="'Tokyo'"
+            <time-component :title="'Tokyo'"
                             :timezone="'Asia/Tokyo'">
             </time-component>
         </drag-container>

@@ -7,8 +7,7 @@
             <date-component></date-component>
         </drag-container>
         <drag-container>
-            <time-component :currentDate="new Date()"
-                            :timezone="''"
+            <time-component :timezone="''"
                             :title="'Local Time'">
             </time-component>
         </drag-container>
