@@ -23,6 +23,6 @@
         }
     },
     "include": [
-        "resources/**/*"
+        "resources/scripts/*"
     ]
 }
