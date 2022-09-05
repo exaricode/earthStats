@@ -8,6 +8,6 @@
     @vite
 </head>
 <body>
-    <div id="clock"></div>
+    <div id="clockMain"></div>
 </body>
 </html>

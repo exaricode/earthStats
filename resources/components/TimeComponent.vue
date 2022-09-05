@@ -5,8 +5,6 @@
                 class="border-2 border-black border-solid m-auto flow-root relative text-center">
                 <hr class="absolute bg-black rounded-full m-auto"
                     :style="{width: '5%', height: '5%', top: '47.5%', left: '47.5%'}" />
-                <!-- <hr class="absolute h-full w-2 bg-black m-auto"
-                    :style="{left: '50%', transform: 'rotateZ(0deg)'}" /> -->
                 <span v-for="(h, index) in timeList" 
                     :style="{transform: 'rotateZ(' + rotation * (index) + 'deg)' + 'translate(-50%, -50%)',
                         display: 'block',
@@ -18,12 +16,9 @@
                     <i :style="{transform: 'rotateZ(' + -rotation * (index) + 'deg)',
                             display: 'block'}">{{h}}</i>
                 </span>
-                <div id="second" :style="[hand, second]"
-                    ></div>
-                <div id="minute" :style="[hand, minute]"
-                    ></div>
-                <div id="hour" :style="[hand, hour]"
-                    ></div>
+                <div id="second" :style="[hand, second]"></div>
+                <div id="minute" :style="[hand, minute]"></div>
+                <div id="hour" :style="[hand, hour]"></div>
             </div>
         </template>
     </container-fieldset>
@@ -57,12 +52,12 @@ const second = ref({
     height: '45%',
     left: '49%',
     transform: 'rotateZ(0deg)',
-    borderColor: 'red',
+    borderColor: 'red'
 });
 
 const minute = ref({
     width: '2.5px',
-    height: '40%',
+    height: '45%',
     left: '49%',
     transform: 'rotateZ(0deg)',
     backgroundColor: 'black'
@@ -70,7 +65,7 @@ const minute = ref({
 
 const hour = ref({
     width: '2.5px',
-    height: '25%',
+    height: '35%',
     left: '49%',
     transform: 'rotateZ(0deg)',
     backgroundColor: 'black'
@@ -80,7 +75,7 @@ const hand = ref({
     position: 'absolute',
     top: '50%',
     transformOrigin: 'center 0px',
-    border: '.5px solid black'
+    border: '.5px solid black',
 });
 
 const timeList = ref([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
@@ -107,7 +102,6 @@ onMounted(() => {
 
     secondInterval = setInterval(() => {
         secondAngle += 6;
-        // console.log(secondAngle);
         second.value.transform = `rotateZ(${secondAngle}deg)`;
     }, 1000);
 

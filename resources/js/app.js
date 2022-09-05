@@ -1,6 +1,4 @@
 import { createApp } from "vue";
-import './clock';
-import './weather';
 
 import App from "../components/App.vue";
 
