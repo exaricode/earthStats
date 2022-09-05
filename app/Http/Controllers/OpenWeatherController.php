@@ -12,6 +12,13 @@ class OpenWeatherController extends Controller
     }
 
     public static function getCurrentWeatherPos(Request $request) {
-        return OpenWeather::getCurrentWeatherPos($request);
+        $lon = $request->longitude;
+        $lat = $request->latitude;
+        return OpenWeather::getCurrentWeatherPos($lon, $lat);
+    }
+
+    public static function getCurrentWeatherPlace(Request $request) {
+        $place = $request->place;
+        return OpenWeather::getCurrentWeatherPlace($place);
     }
 }

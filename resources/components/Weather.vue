@@ -4,7 +4,24 @@
     </div>
     <main class="flex flex-wrap">
         <drag-container>
-            <weather-component></weather-component>
+            <weather-component :place="'local'"
+                                :name="'Local Weather'">
+            </weather-component>
+        </drag-container>
+        <drag-container>
+            <weather-component :place="'New+York'"
+                                :name="'New York'">
+            </weather-component>
+        </drag-container>
+        <drag-container>
+            <weather-component :place="'London'"
+                                :name="'London'">
+            </weather-component>
+        </drag-container>
+        <drag-container>
+            <weather-component :place="'Tokyo'"
+                                :name="'Tokyo'">
+            </weather-component>
         </drag-container>
     </main>
 </template>

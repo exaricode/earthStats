@@ -13,7 +13,9 @@
             </time-component>
         </drag-container>
         <drag-container>
-            <weather-component></weather-component>
+            <weather-component :place="'local'"
+                            :name="'Local Weather'">
+            </weather-component>
         </drag-container>
     </main>
 </template>

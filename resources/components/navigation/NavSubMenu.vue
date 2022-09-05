@@ -17,11 +17,8 @@ const props = defineProps({
 });
 
 function changePage(title){
-    console.log(title);
     const regex = /\s|\W/g; 
-    let tempTitle = title.replace(regex, '').toLowerCase().trim();
-    console.log(tempTitle);
-    //TODO: location url / uncomment line below
+    let tempTitle = title.replace(regex, '').toLowerCase().trim();    
     location.href = import.meta.env.BASE_URL + tempTitle;
 }
 

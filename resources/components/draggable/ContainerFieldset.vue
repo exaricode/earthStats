@@ -3,8 +3,8 @@
         <legend class="text-center w-full py-1
             border-b-2 border-b-black border-solid"> {{ legend }}</legend>
         
-            <slot name="first"></slot>
-            <slot name="second"></slot>
+            <slot name="first" ></slot>
+            <!-- <slot name="second"></slot> -->
         
     </fieldset>
 </template>

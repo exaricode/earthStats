@@ -7,12 +7,6 @@
 
 <script setup>
 import NavMenu from "./NavMenu.vue";
-
-import { onMounted } from "vue";
-
-onMounted(() => {
-    console.log(import.meta.env);
-})
 </script>
 
 <style scoped>

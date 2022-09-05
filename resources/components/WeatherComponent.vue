@@ -1,29 +1,30 @@
 <template>
-    <container-fieldset :legend="'Current Weather'">
+    <container-fieldset :legend="name">
         <template #first>
-            <div v-if="currentWeather != null && currentWeather != undefined">
-                <div v-if="currentWeather.coord != null && currentWeather.coord != undefined">
+            <div v-if="currentWeather != null && currentWeather != undefined" 
+                class="flex flex-wrap items-center justify-around h-full">
+                <div v-if="currentWeather.coord != null && currentWeather.coord != undefined"
+                    class="w-full">
                     long: {{currentWeather.coord.lon}}
                     lat: {{currentWeather.coord.lat}}
                 </div>
-                 <div v-if="currentWeather.weather != null && currentWeather.weather != undefined">
+                <!--  <div v-if="currentWeather.weather != null && currentWeather.weather != undefined">
                     state: {{currentWeather.weather[0]}}
-                </div>
+                </div> -->
                 <div v-if="currentWeather.temp != null && currentWeather.temp !=undefined">
                     <ul>
-                        <li>temp: {{currentWeather.temp.temp}} feels: {{currentWeather.temp.feels_like}}</li>
-                        <li>min: {{currentWeather.temp.temp_min}} max: {{currentWeather.temp.temp_max}}</li>
-                        <li>humidity: {{currentWeather.temp.humidity}} pressure: {{currentWeather.temp.pressure}}</li>
+                        <li>temp: {{currentWeather.temp.temp}} </li><li>feels: {{currentWeather.temp.feels_like}}</li>
+                        <li>min: {{currentWeather.temp.temp_min}} </li><li>max: {{currentWeather.temp.temp_max}}</li>
+                        <li>humidity: {{currentWeather.temp.humidity}} </li><li>pressure: {{currentWeather.temp.pressure}}</li>
                     </ul>    
                 </div>
-            </div>
-        </template>
-        <template #second>
-           <img v-if="currentWeather.weather != undefined
+           
+                <img v-if="currentWeather.weather != undefined
                     && currentWeather.weather != null" 
                 :src="currentWeather.imagePath"
                 alt=""
-                class="inline" />
+                class="inline hover:scale-125" />
+            </div>
         </template>
     </container-fieldset>
 </template>
@@ -33,6 +34,11 @@ import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
 import ContainerFieldset from './draggable/ContainerFieldset.vue';
+
+const props = defineProps({
+    place: String,
+    name: String
+});
 
 const currentWeather = reactive({
     coord: null,
@@ -50,12 +56,20 @@ const currentWeather = reactive({
 });
 
 onMounted(async () => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && props.place == 'local') {
         getUserPosition();
+    } else if (props.place != '') {
+        console.log('place statement: ');
+        console.log(props.place);
+        await axios.post('getCurrentWeatherPlace', {
+                place: props.place
+            })
+            .then(response => {
+                setWeather(response);
+            });
     } else {
         await axios.post('getCurrentWeather')
             .then(response => {
-                console.log(response);
                 setWeather(response);
             });
     }
