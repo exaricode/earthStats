@@ -1,14 +1,15 @@
 <template>
-    <div class="grid grid-cols-6 gap-2">
-        <ul class="inline" v-for="(item, index, key) in forecastArray" :key="key">
-            <template v-for="(i, x, k) in item" :key="k">
+    <div class="grid grid-cols-6 gap-2 w-full px-4">
+        <ul class="inline border-2 border-black px-2" v-for="(item, key) in forecastArray" :key="key">
+            <template v-for="(i, x) in item">
                 
                 <template v-if="typeof i === 'object' && x != 'weather'">
                     <li v-for="(item, key) in i"> {{key}} : {{item}}</li>
                 </template>
                 <template v-else-if="x == 'weather'">
-                    <hr class="w-full h-5 bg-black" />
-                    <img :src="setWeatherImage(x.icon)" />
+                    <li>
+                        <img :src="setWeatherImage(item[x].icon)" />
+                    </li>
                 </template>
                 <template v-else>
                     <li>{{ i }}</li>
@@ -23,41 +24,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
-function setWeatherImage(thumb) {
-    const imagePath = new URL ('../images/' + thumb + '.png', import.meta.url);
-    return imagePath;    
-}
-
 const temp = ref();
-// TODO: forecast weather
-const forecast2 = reactive({
-    dt: null,
-    main: {
-        temp: '-',
-        feels: '-',
-        min: '-',
-        max: '-',
-        pressure: '-',
-        sea_level: '-',
-        grnd_level: '-',
-        humidity: '-',
-        temp_kf: '-'
-    },
-    weather: {
-        id: 0,
-        main: '-',
-        desc: '-',
-        icon: 'unknown'
-    },
-    clouds: 0,
-    wind: {
-        speed: 0,
-        deg: 0,
-        gust: 0
-    },
-    visibility: 0,
-    rain: '-'
-});
 
 // selected city info
 const cityInfo = reactive({
@@ -82,7 +49,9 @@ onMounted(async() => {
 
 function setForecast(weather) {
     const forecast = reactive({});
-    forecast.dt = new Date(weather.dt).toDateString();
+    let ts = new Date(weather.dt_txt);
+    
+    forecast.dt = ts.toLocaleString();
     forecast.main = weather.main;
     forecast.weather = weather.weather[0];
     forecast.clouds = weather.clouds;
@@ -101,6 +70,11 @@ function setCityInfo(city) {
     cityInfo.sunrise = city.sunrise;
     cityInfo.sunset = city.sunset;
     cityInfo.timezone = city.timezone;
+}
+
+function setWeatherImage(thumb) {
+    const imagePath = new URL ('../images/' + thumb + '.png', import.meta.url);
+    return imagePath;    
 }
 
 </script>

@@ -8,9 +8,6 @@
                     long: {{currentWeather.coord.lon}}
                     lat: {{currentWeather.coord.lat}}
                 </div>
-                <!--  <div v-if="currentWeather.weather != null && currentWeather.weather != undefined">
-                    state: {{currentWeather.weather[0]}}
-                </div> -->
                 <div v-if="currentWeather.temp != null && currentWeather.temp !=undefined">
                     <ul>
                         <li>temp: {{currentWeather.temp.temp}} </li><li>feels: {{currentWeather.temp.feels_like}}</li>
@@ -105,18 +102,12 @@ function getUserPosition() {
 
     async function success(pos) {
         const crd = pos.coords;
-/* 
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`); */
 
         await axios.post('getCurrentWeatherPos', {
                 longitude: crd.longitude,
                 latitude: crd.latitude
                 })
             .then(response => {
-                console.log(response);
                 setWeather(response);
                 });
     }
