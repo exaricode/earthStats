@@ -1,11 +1,19 @@
 <template>
-    <div class="grid grid-cols-12 gap-2">
+    <div class="grid grid-cols-6 gap-2">
         <ul class="inline" v-for="(item, index, key) in forecastArray" :key="key">
-            {{ i == typeof(Object) ? temp.value = item[i] : i}}
-            
-            <li v-for="(i, k) in item" :key="k">
+            <template v-for="(i, x, k) in item" :key="k">
                 
-            </li>
+                <template v-if="typeof i === 'object' && x != 'weather'">
+                    <li v-for="(item, key) in i"> {{key}} : {{item}}</li>
+                </template>
+                <template v-else-if="x == 'weather'">
+                    <hr class="w-full h-5 bg-black" />
+                    <img :src="setWeatherImage(x.icon)" />
+                </template>
+                <template v-else>
+                    <li>{{ i }}</li>
+                </template>
+            </template>
 
         </ul>
     </div>
@@ -15,9 +23,14 @@
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
+function setWeatherImage(thumb) {
+    const imagePath = new URL ('../images/' + thumb + '.png', import.meta.url);
+    return imagePath;    
+}
+
 const temp = ref();
 // TODO: forecast weather
-const forecast = reactive({
+const forecast2 = reactive({
     dt: null,
     main: {
         temp: '-',
@@ -63,32 +76,20 @@ onMounted(async() => {
     await axios.post('getForeCastWeather')
         .then(response => { 
             setCityInfo(response.data.city);
-            response.data.list.forEach(elem => forecastArray.push(elem));
-            // setForecast(response.data.list);
+            response.data.list.forEach(elem => forecastArray.push(setForecast(elem)));
         });
 });
 
 function setForecast(weather) {
-    forecast.dt = weather.dt;
-    forecast.main.temp = weather.main.temp;
-    forecast.main.feels = weather.main.feels;
-    forecast.main.min = weather.main.min;
-    forecast.main.max = weather.main.max;
-    forecast.main.pressure = weather.main.pressure;
-    forecast.main.sea_level = weather.main.sea_level;
-    forecast.main.grnd_level = weather.main.grnd_level;
-    forecast.main.humidity = weather.main.humidity;
-    forecast.main.temp_kf = weather.main.temp_kf;
-    forecast.weather.id = weather.weather.id;
-    forecast.weather.main = weather.weather.main;
-    forecast.weather.desc = weather.weather.desc;
-    forecast.weather.icon = weather.weather.icon;
+    const forecast = reactive({});
+    forecast.dt = new Date(weather.dt).toDateString();
+    forecast.main = weather.main;
+    forecast.weather = weather.weather[0];
     forecast.clouds = weather.clouds;
-    forecast.wind.speed = weather.wind.speed;
-    forecast.wind.deg = weather.wind.deg;
-    forecast.wind.gust = weather.wind.gust;
+    forecast.wind = weather.wind;
     forecast.visibility = weather.visibility;
     forecast.rain = weather.rain;
+    return forecast;
 }
 
 function setCityInfo(city) {
