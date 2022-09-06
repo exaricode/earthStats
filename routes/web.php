@@ -39,6 +39,10 @@ Route::get('/local', function () {
     return redirect('/weather');
 });
 
+Route::get('calendar', function () {
+    return view('calendar');
+});
+
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
 Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWeatherPos']);
 Route::post('getCurrentWeatherPlace', [OpenWeatherController::class, 'getCurrentWeatherPlace']);
