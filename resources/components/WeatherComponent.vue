@@ -62,8 +62,6 @@ onMounted(async () => {
     if (navigator.geolocation && props.place == 'local') {
         getUserPosition();
     } else if (props.place != '') {
-        console.log('place statement: ');
-        console.log(props.place);
         await axios.post('getCurrentWeatherPlace', {
                 place: props.place
             })
