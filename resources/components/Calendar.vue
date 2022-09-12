@@ -5,7 +5,7 @@
     <main class="grid grid-cols-7">
         <header class="col-span-7 grid grid-cols-7">
             <h2 class="col-span-7 text-center font-medium text-xl my-2">
-                {{ currentDay }}  {{ currentDate }}  {{ currentMonth }}  {{ currentYear}}
+                {{ current.day }}  {{ current.date }}  {{ current.month }}  {{ current.year}}
             </h2>
             <div class="inline text-center font-bold border-b-2 border-solid border-b-black"
                 v-for="day in days">
@@ -14,19 +14,20 @@
         </header>
         <section class="col-span-7">
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
-                <day-container  v-for="i in firstOfMonth" 
+                <day-container  v-for="i in current.firstDay" 
                         class="bg-slate-400"
-                        :date="new Date(currentYear, previousMonth, (numDaysPreviousMonth + i - firstOfMonth))">
+                        :date="new Date(current.year, current.previousMonth, 
+                        (current.previousMonth.days + i - current.firstDay))">
                     <template #day>
-                        {{ numDaysPreviousMonth + i - firstOfMonth }}
+                        {{ current.previousMonth.days + i - current.firstDay }}
                     </template>
                 </day-container>
-                <day-container v-for="j in numDaysOfMonth" class="bg-slate-50">
+                <day-container v-for="j in current.numDays" class="bg-slate-50">
                     <template #day>
                         {{ j }}
                     </template>
                 </day-container> 
-                <day-container v-for="k in (49 - numDaysOfMonth - firstOfMonth )" 
+                <day-container v-for="k in (49 - current.numDays - current.firstDay)" 
                             class="bg-slate-400">
                     <template #day>
                         {{ k }}
@@ -38,12 +39,24 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, reactive } from 'vue';
 import NavBar from './navigation/NavBar.vue';
 import DayContainer from './calendar/DayContainer.vue';
+import CalendarMonth from '../js/classes/calendarMonth';
 
-const numDaysOfMonth = ref();
+/* const numDaysOfMonth = ref();
 const numDaysPreviousMonth = ref();
+const currentYear = ref();
+const currentMonth = ref();
+const currentDate = ref();
+const currentDay = ref();
+const firstOfMonth = ref();
+const previousMonth = ref();
+const nextMonth = ref(); */
+
+const current = reactive(new CalendarMonth(new Date()));
+const previous = ref();
+const next = ref();
 
 const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const months = [{name: 'january', days: 31},
@@ -59,18 +72,20 @@ const months = [{name: 'january', days: 31},
                 {name: 'november', days: 30 },
                 {name: 'december', days: 31 }];
 
-const currentYear = ref();
-const currentMonth = ref();
-const currentDate = ref();
-const currentDay = ref();
-const firstOfMonth = ref();
-const previousMonth = ref();
-const nextMonth = ref();
-
 onBeforeMount(() => {
-    let date = new Date();
+   // let date = new Date();
+    //current = ;
+    console.log(current)
+    current.numDays = months[current.month].days;
+    current.month > 0 
+        ? current.previousMonth = months[current.month - 1] 
+        : current.previousMonth = months[months.length -  1];
+    current.month < months.length - 1
+        ? current.nextMonth = months[current.month + 1]
+        : current.nextMonth = months[0];
+    console.log(current);
 
-    currentYear.value = date.getFullYear();
+    /* currentYear.value = date.getFullYear();
     currentMonth.value = months[date.getMonth()].name;
     currentDate.value =  date.getDate();
     currentDay.value = date.getDay() === 0 ? days[days.length - 1] : days[date.getDay() - 1];
@@ -78,8 +93,13 @@ onBeforeMount(() => {
     numDaysOfMonth.value = months[date.getMonth()].days;
     previousMonth.value = months[date.getMonth() - 1].name;
     numDaysPreviousMonth.value = months[date.getMonth() - 1].days;
-    nextMonth.value = months[date.getMonth() + 1].name;
+    nextMonth.value = months[date.getMonth() + 1].name; */
 });
+
+// set the month for a CalendarMonth
+function setCalenderMonth(month, date){
+    
+}
 </script>
 
 <style lang="scss" scoped>
