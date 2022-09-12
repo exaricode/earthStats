@@ -1,30 +1,19 @@
 export default class CalendarMonth {
-    _fullDate; _year; _month; _date; _day; 
-    _firstDay;
+    fullDate; year; month; date; day; 
+    firstDay;
 
-    _numDays; _previousMonth; _nextMonth;
+    numDays; previousMonth; nextMonth;
 
     constructor(dateObj) {
-        this._fullDate = dateObj;
-        this._year = this._fullDate.getFullYear();
-        // this._month = monthArr[this._fullDate.getMonth()].name;
-        this._month = this._fullDate.getMonth();
-        this._date = this._fullDate.getDate();
-        this._day = this._fullDate.getDay() === 0 
-            ? 0 //daysArr[daysArr.length - 1] 
-            : this._fullDate.getDay() // daysArr[this._fullDate.getDay() - 1];
+        this.fullDate = dateObj;
+        this.year = this.fullDate.getFullYear();
+        this.month = this.fullDate.getMonth();
+        this.date = this.fullDate.getDate();
+        this.day = this.fullDate.getDay() === 0 
+            ? 6 : this.fullDate.getDay() - 1;
 
-        this._firstDay = new Date(`1 ${this._month} ${this._year}`).getDay();
-
-        // this._numDays = monthArr[this._fullDate.getMonth()].days;
-
-        /* this._previousMonth = this._fullDate.getMonth() !== 0 
-                    ? monthArr[this._fullDate.getMonth() - 1] 
-                    : monthArr[monthArr.length - 1]; */
-
-        /* this._nextMonth = this._fullDate.getMonth() !== 11
-                    ? monthArr[this._fullDate.getMonth() + 1]
-                    : monthArr[monthArr[0]]; */
+        this.firstDay = new Date(this.year, this.month, 1).getDay();
+        this.firstDay === 0 ? this.firstDay = 6 : this.firstDay--;
     }
 
     get fullDate () {

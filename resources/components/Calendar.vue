@@ -4,8 +4,12 @@
     </div>
     <main class="grid grid-cols-7">
         <header class="col-span-7 grid grid-cols-7">
-            <h2 class="col-span-7 text-center font-medium text-xl my-2">
-                {{ current.day }}  {{ current.date }}  {{ current.month }}  {{ current.year}}
+            <h2 class="col-span-7 grid grid-cols-4 font-medium text-3xl py-2">
+                <button @click="previousMonth()" class="pl-2 hover:scale-150" value="previous">&#10094;</button>
+                <span class="mx-auto col-span-2 inline-block">
+                {{ days[current.day] }}  {{ current.date }}  {{ months[current.month].name }}  {{ current.year}}
+                </span>
+                <button @click="nextMonth()" class="pr-2 hover:scale-150" value="next">&#10095;</button>
             </h2>
             <div class="inline text-center font-bold border-b-2 border-solid border-b-black"
                 v-for="day in days">
@@ -14,10 +18,8 @@
         </header>
         <section class="col-span-7">
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
-                <day-container  v-for="i in current.firstDay" 
-                        class="bg-slate-400"
-                        :date="new Date(current.year, current.previousMonth, 
-                        (current.previousMonth.days + i - current.firstDay))">
+                <day-container  v-for="i in current.firstDay"
+                        class="bg-slate-400">
                     <template #day>
                         {{ current.previousMonth.days + i - current.firstDay }}
                     </template>
@@ -44,61 +46,61 @@ import NavBar from './navigation/NavBar.vue';
 import DayContainer from './calendar/DayContainer.vue';
 import CalendarMonth from '../js/classes/calendarMonth';
 
-/* const numDaysOfMonth = ref();
-const numDaysPreviousMonth = ref();
-const currentYear = ref();
-const currentMonth = ref();
-const currentDate = ref();
-const currentDay = ref();
-const firstOfMonth = ref();
-const previousMonth = ref();
-const nextMonth = ref(); */
 
-const current = reactive(new CalendarMonth(new Date()));
+const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
 
-const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-const months = [{name: 'january', days: 31},
-                {name: 'february', days: 29},
-                {name: 'march', days: 31},
-                {name: 'april', days: 30},
-                {name: 'may', days: 31},
-                {name: 'june', days: 30},
-                {name: 'juli', days: 31},
-                {name: 'august', days: 31}, 
-                {name: 'september', days: 30},
-                {name: 'oktober', days: 31 },
-                {name: 'november', days: 30 },
-                {name: 'december', days: 31 }];
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const months = [{name: 'January', days: 31},
+                {name: 'February', days: 29},
+                {name: 'March', days: 31},
+                {name: 'April', days: 30},
+                {name: 'May', days: 31},
+                {name: 'June', days: 30},
+                {name: 'July', days: 31},
+                {name: 'August', days: 31}, 
+                {name: 'September', days: 30},
+                {name: 'October', days: 31 },
+                {name: 'November', days: 30 },
+                {name: 'December', days: 31 }];
 
 onBeforeMount(() => {
-   // let date = new Date();
-    //current = ;
-    console.log(current)
-    current.numDays = months[current.month].days;
-    current.month > 0 
-        ? current.previousMonth = months[current.month - 1] 
-        : current.previousMonth = months[months.length -  1];
-    current.month < months.length - 1
-        ? current.nextMonth = months[current.month + 1]
-        : current.nextMonth = months[0];
-    console.log(current);
+    fillCurrentMonth();
 
-    /* currentYear.value = date.getFullYear();
-    currentMonth.value = months[date.getMonth()].name;
-    currentDate.value =  date.getDate();
-    currentDay.value = date.getDay() === 0 ? days[days.length - 1] : days[date.getDay() - 1];
-    firstOfMonth.value = new Date(`1 ${currentMonth.value} ${currentYear.value}`).getDay();
-    numDaysOfMonth.value = months[date.getMonth()].days;
-    previousMonth.value = months[date.getMonth() - 1].name;
-    numDaysPreviousMonth.value = months[date.getMonth() - 1].days;
-    nextMonth.value = months[date.getMonth() + 1].name; */
+    previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
+    next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1, 1));
 });
 
 // set the month for a CalendarMonth
-function setCalenderMonth(month, date){
-    
+function previousMonth() {
+    next.value = current.value;
+    console.log(next.value);
+    current.value = previous.value;
+    fillCurrentMonth();
+
+    previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
+    next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1, 1));
+    console.log(current.value);
+    previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
+    console.log(previous.value);
+}
+
+function nextMonth() {
+    previous.value = current.value;
+    current.value = next.value;
+    fillCurrentMonth();
+    next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1), 1);
+}
+
+function fillCurrentMonth() {
+    current.value.numDays = months[current.value.month].days;
+    current.value.month > 0 
+        ? current.value.previousMonth = months[current.value.month - 1] 
+        : current.value.previousMonth = months[months.length -  1];
+    current.value.month < months.length - 1
+        ? current.value.nextMonth = months[current.value.month + 1]
+        : current.value.nextMonth = months[0];
 }
 </script>
 
