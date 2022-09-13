@@ -23,6 +23,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $guarded = ['id'];
+
+    public function calendarEvent() {
+        return $this->hasMany(CalendarEvent::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -16,21 +16,29 @@
                 {{ day }}
             </div>
         </header>
-        <section class="col-span-7">
-            <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
+        <!-- TODO: adjust height -->
+        <section class="col-span-7 flow-root relative h-screen">
+            <event-modal :class="changeDisplay"
+                @click.self="openModal = false"></event-modal>
+            <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]"
+                >
                 <day-container  v-for="i in current.firstDay"
-                        class="bg-slate-400">
+                        class="bg-slate-400"
+                        @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ current.previousMonth.days + i - current.firstDay }}
                     </template>
                 </day-container>
-                <day-container v-for="j in current.numDays" class="bg-slate-50">
+                <day-container v-for="j in current.numDays" 
+                        class="bg-slate-50"
+                        @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ j }}
                     </template>
                 </day-container> 
                 <day-container v-for="k in (49 - current.numDays - current.firstDay)" 
-                            class="bg-slate-400">
+                            class="bg-slate-400"
+                            @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ k }}
                     </template>
@@ -41,15 +49,20 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, reactive } from 'vue';
+import { ref, onBeforeMount, reactive, computed } from 'vue';
 import NavBar from './navigation/NavBar.vue';
 import DayContainer from './calendar/DayContainer.vue';
 import CalendarMonth from '../js/classes/calendarMonth';
-
+import EventModal from './calendar/EventModal.vue';
 
 const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
+const openModal = ref(false);
+
+const changeDisplay = computed(() => {
+   return openModal.value ? 'block' : 'hidden';
+});
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const months = [{name: 'January', days: 31},
@@ -67,7 +80,6 @@ const months = [{name: 'January', days: 31},
 
 onBeforeMount(() => {
     fillCurrentMonth();
-
     previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
     next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1, 1));
 });
@@ -101,6 +113,11 @@ function fillCurrentMonth() {
     current.value.month < months.length - 1
         ? current.value.nextMonth = months[current.value.month + 1]
         : current.value.nextMonth = months[0];
+}
+
+function openCalendarEvent(event) {
+    console.log(`add calendar event ${event}`);
+    openModal.value = true;
 }
 </script>
 
