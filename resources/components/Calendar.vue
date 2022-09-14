@@ -20,8 +20,7 @@
         <section class="col-span-7 flow-root relative h-screen">
             <event-modal :class="changeDisplay"
                 @click.self="openModal = false"></event-modal>
-            <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]"
-                >
+            <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
                 <day-container  v-for="i in current.firstDay"
                         class="bg-slate-400"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
@@ -87,15 +86,12 @@ onBeforeMount(() => {
 // set the month for a CalendarMonth
 function previousMonth() {
     next.value = current.value;
-    console.log(next.value);
     current.value = previous.value;
     fillCurrentMonth();
 
     previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
     next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1, 1));
-    console.log(current.value);
     previous.value = new CalendarMonth(new Date(current.value.year, current.value.month - 1, 1));
-    console.log(previous.value);
 }
 
 function nextMonth() {
@@ -116,7 +112,10 @@ function fillCurrentMonth() {
 }
 
 function openCalendarEvent(event) {
-    console.log(`add calendar event ${event}`);
+    console.log(event.target);
+    if (event.target.classList.contains('bg-slate-400')) {
+        console.log('class true')
+    }
     openModal.value = true;
 }
 </script>

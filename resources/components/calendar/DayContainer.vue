@@ -19,7 +19,6 @@ const styleObject = ref({
 const emits = defineEmits(['calendarEvent'])
 
 async function emitCalendarEvent(e) {
-    console.log(`day container emit calendar event: ${e}`);
     emits('calendarEvent', e);
 }
 

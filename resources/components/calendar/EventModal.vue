@@ -1,19 +1,25 @@
 <template>
     <div class="w-full h-full bg-slate-600/50 z-50 absolute">
-        <div class="w-fit h-2/3 mx-auto mt-8 bg-white border-2 border-black border-solid
-                grid grid-cols-2">
-            <label for="title">title</label>
-            <input type="text" id="title" name="title" />
-            
-            <label for="desc">description</label>
-            <input type="text" id="desc" name="desc" />
-            
-            <label for="start_date">Start</label>
-            <input type="date" id="start_date" name="start_date" />
-            
-            <label for="end_date">End</label>
-            <input type="date" id="end_date" name="end_date" />
-            <div class="col-span-2">
+        <form method="POST" action="/createCalendarEvent" enctype="multipart/form-data"
+            class="w-fit h-2/3 mx-auto mt-8 bg-white border-2 border-black border-solid">
+            <div>
+                <label for="title">title</label>
+                <input type="text" id="title" name="title" />
+            </div>
+            <div>
+                <label for="desc">description</label>
+                <input type="text" id="desc" name="desc" />
+            </div>
+            <div>
+                <label for="start_date">Start</label>
+                <input type="date" id="start_date" name="start_date" />
+            </div>
+            <div>
+                <label for="end_date">End</label>
+                <input type="date" id="end_date" name="end_date" />
+            </div>
+
+            <div>
                 <p>Reminder 
                     <label for="reminder_yes">Yes</label>
                     <input type="radio" name="reminder" id="reminder_yes" value="yes" checked>
@@ -27,14 +33,22 @@
             
             <div class="col-span-2">
                 <button type="submit" value="addEvent" id="addEvent"
-                    class="mx-auto">add</button>
+                    class="mx-auto" @click.prevent="createCalendarEvent">add</button>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
 <script setup>
 
+const props = defineProps({
+    calendarEvent: Object
+});
+
+function createCalendarEvent() {
+    const form = document.forms[0];
+    console.log(form);
+}
 </script>
 
 <style scoped>
@@ -48,7 +62,7 @@ label {
 }
 
 input {
-    margin-right: ;
+    margin-right: auto;
 }
 
 
