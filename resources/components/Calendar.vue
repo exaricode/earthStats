@@ -18,7 +18,7 @@
         </header>
         <!-- TODO: adjust height -->
         <section class="col-span-7 flow-root relative h-screen">
-            <event-modal :class="changeDisplay"
+            <event-modal :class="changeDisplay" :calendarEvent="newCalendarEvent"
                 @click.self="openModal = false"></event-modal>
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
                 <day-container  v-for="i in current.firstDay"
@@ -36,7 +36,7 @@
                     </template>
                 </day-container> 
                 <day-container v-for="k in (49 - current.numDays - current.firstDay)" 
-                            class="bg-slate-400"
+                            class="bg-slate-300"
                             @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ k }}
@@ -57,6 +57,7 @@ import EventModal from './calendar/EventModal.vue';
 const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
+const newCalendarEvent = ref({});
 const openModal = ref(false);
 
 const changeDisplay = computed(() => {
@@ -113,8 +114,13 @@ function fillCurrentMonth() {
 
 function openCalendarEvent(event) {
     console.log(event.target);
+    newCalendarEvent.value.event = event;
     if (event.target.classList.contains('bg-slate-400')) {
-        console.log('class true')
+        newCalendarEvent.value.date = previous.value;
+    } else if (event.target.classList.contains('bg-slate-300')) {
+        newCalendarEvent.value.date = next.value;
+    } else {
+        newCalendarEvent.value.date = current.value;
     }
     openModal.value = true;
 }

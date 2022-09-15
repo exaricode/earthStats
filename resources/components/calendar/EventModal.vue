@@ -12,7 +12,8 @@
             </div>
             <div>
                 <label for="start_date">Start</label>
-                <input type="date" id="start_date" name="start_date" />
+                <!-- TODO: default value clicked date -->
+                <input type="date" id="start_date" name="start_date" :value="new Date(calendarEvent.date.year, calendarEvent.date.month, toInt(calendarEvent.event.innerHTML)).toDateString()"/>
             </div>
             <div>
                 <label for="end_date">End</label>
@@ -48,6 +49,11 @@ const props = defineProps({
 function createCalendarEvent() {
     const form = document.forms[0];
     console.log(form);
+
+    const data = {
+        start_date: '',
+
+    }
 }
 </script>
 
