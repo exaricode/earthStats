@@ -21,12 +21,20 @@ class CalendarEvent extends Model
     }
 
     public static function getItems() {
-        return CalendarEvent::where('user_id', Auth::user()->id);
+        return CalendarEvent::all();
         // return CalendarEvent::where(User::id, 'user_id')->get()
     }
 
     public static function createItem($event) {
-        $id = Auth::user()->id;
-        return CalendarEvent::create([]);
+        // $id = Auth::user()->id;
+        return CalendarEvent::create([
+            'user_id' => $event->user_id,
+            'title' => $event->title,
+            'desc' => $event->desc,
+            'start_date' => $event->start_date,
+            'end_date' => $event->end_date,
+            'alarm_time' => $event->alarm_time,
+            'reminder' => $event->reminder
+        ]);
     }
 }

@@ -13,7 +13,7 @@
             <div>
                 <label for="start_date">Start</label>
                 <!-- TODO: default value clicked date -->
-                <input type="date" id="start_date" name="start_date" :value="new Date(calendarEvent.date.year, calendarEvent.date.month, toInt(calendarEvent.event.innerHTML)).toDateString()"/>
+                <input type="date" id="start_date" name="start_date" value=""/>
             </div>
             <div>
                 <label for="end_date">End</label>
@@ -41,6 +41,8 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+
 
 const props = defineProps({
     calendarEvent: Object
@@ -48,12 +50,17 @@ const props = defineProps({
 
 function createCalendarEvent() {
     const form = document.forms[0];
-    console.log(form);
 
     const data = {
-        start_date: '',
-
+        title: form[0].value,
+        desc: form[1].value,
+        start_date: form[2].value,
+        end_date: form[3].value,
+        reminder: form[4].checked ? form[4].value : form[5].value,
+        alarm_time: form[6].value,
     }
+    console.log(data);
+    axios.post('createCalendarEvent', data);
 }
 </script>
 

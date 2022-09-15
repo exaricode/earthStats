@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenWeatherController;
-use App\Controllers\CalendarEvent;
+use App\Http\Controllers\CalendarEventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +48,5 @@ Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWe
 Route::post('getCurrentWeatherPlace', [OpenWeatherController::class, 'getCurrentWeatherPlace']);
 Route::post('getForeCastWeather', [OpenWeatherController::class, 'getForeCastWeather']);
 
-Route::get('getCalendarEvents', [CalendarEvent::class, 'getItems']);
-Route::post('createCalendarEvent', [CalendarEvent::class, 'createItem']);
+Route::get('getCalendarEvents', [CalendarEventController::class, 'getItems']);
+Route::post('createCalendarEvent', [CalendarEventController::class, 'createItem']);

@@ -32,7 +32,14 @@
                         class="bg-slate-50"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
-                        {{ j }}
+                        {{ j }} 
+                        <template v-if="calendarEvents != undefined">
+                            <template v-for="i in calendarEvents">
+                                <template v-if="new Date(i.start_date).getDate() == j">
+                                   <div v-html="i.title"></div>
+                                </template>
+                            </template>
+                        </template>
                     </template>
                 </day-container> 
                 <day-container v-for="k in (49 - current.numDays - current.firstDay)" 
@@ -49,6 +56,8 @@
 
 <script setup>
 import { ref, onBeforeMount, reactive, computed } from 'vue';
+import axios from 'axios';
+
 import NavBar from './navigation/NavBar.vue';
 import DayContainer from './calendar/DayContainer.vue';
 import CalendarMonth from '../js/classes/calendarMonth';
@@ -57,6 +66,7 @@ import EventModal from './calendar/EventModal.vue';
 const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
+const calendarEvents = ref();
 const newCalendarEvent = ref({});
 const openModal = ref(false);
 
@@ -84,6 +94,21 @@ onBeforeMount(() => {
     next.value = new CalendarMonth(new Date(current.value.year, current.value.month + 1, 1));
 });
 
+async function getCalendarEvents() {
+    calendarEvents.value = await axios.get('getCalendarEvents')
+        .then((response) => { 
+        return response.data.filter((elem) => {
+            console.log(elem);
+            let tempDate = new Date(elem.start_date);
+            if (tempDate.getMonth() == current.value.month && tempDate.getFullYear() == current.value.year) {
+                return elem;
+            }
+                });
+        })
+        .catch((err) => console.log(err))
+    console.log(calendarEvents.value);
+}
+
 // set the month for a CalendarMonth
 function previousMonth() {
     next.value = current.value;
@@ -110,6 +135,7 @@ function fillCurrentMonth() {
     current.value.month < months.length - 1
         ? current.value.nextMonth = months[current.value.month + 1]
         : current.value.nextMonth = months[0];
+    getCalendarEvents();
 }
 
 function openCalendarEvent(event) {
