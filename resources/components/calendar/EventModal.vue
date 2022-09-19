@@ -49,6 +49,7 @@ const props = defineProps({
 });
 
 function createCalendarEvent() {
+    console.log(props.calendarEvent);
     const form = document.forms[0];
 
     const data = {
@@ -60,7 +61,9 @@ function createCalendarEvent() {
         alarm_time: form[6].value,
     }
     console.log(data);
-    axios.post('createCalendarEvent', data);
+    axios.post('createCalendarEvent', data)
+        .then(response => response.data)
+        .then(response => props.calendarEvent.innerHTML += "<div>" + response.title + "</div>");
 }
 </script>
 

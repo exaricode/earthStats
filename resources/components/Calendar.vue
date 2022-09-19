@@ -98,7 +98,6 @@ async function getCalendarEvents() {
     calendarEvents.value = await axios.get('getCalendarEvents')
         .then((response) => { 
         return response.data.filter((elem) => {
-            console.log(elem);
             let tempDate = new Date(elem.start_date);
             if (tempDate.getMonth() == current.value.month && tempDate.getFullYear() == current.value.year) {
                 return elem;
@@ -106,7 +105,6 @@ async function getCalendarEvents() {
                 });
         })
         .catch((err) => console.log(err))
-    console.log(calendarEvents.value);
 }
 
 // set the month for a CalendarMonth
@@ -139,7 +137,7 @@ function fillCurrentMonth() {
 }
 
 function openCalendarEvent(event) {
-    console.log(event.target);
+    
     newCalendarEvent.value.event = event;
     if (event.target.classList.contains('bg-slate-400')) {
         newCalendarEvent.value.date = previous.value;

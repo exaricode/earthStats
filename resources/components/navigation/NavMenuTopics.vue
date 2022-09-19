@@ -11,8 +11,11 @@ const props = defineProps({
     title: String
 })
 
-function changePage(title) {
-    location.href = import.meta.env.VITE_BASE_URL + ':' + import.meta.env.VITE_PORT + '/' + title.toLowerCase();
+function changePage(title){
+    const regex = /\s|\W/g; 
+    let tempTitle = title.replace(regex, '').toLowerCase().trim(); 
+    // TODO: add to .env file: VITE_PORT=8000   
+    location.replace(import.meta.env.VITE_BASE_URL + ':' + import.meta.env.VITE_PORT + '/' + tempTitle.toLowerCase());
 }
 </script>
 

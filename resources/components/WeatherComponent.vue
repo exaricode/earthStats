@@ -74,18 +74,20 @@ onMounted(async () => {
 });
 
 function setWeather(response) {
-    currentWeather.coord = response.data.coord;
-    currentWeather.weather = response.data.weather;
-    currentWeather.temp = response.data.main;
-    currentWeather.wind = response.data.wind;
-    currentWeather.clouds = response.data.clouds;
-    currentWeather.dt = response.data.dt;
-    currentWeather.sys = response.data.sys;
-    currentWeather.timezone = response.data.timezone;
-    currentWeather.id = response.data.id;
-    currentWeather.name = response.data.name;
-    currentWeather.cod = response.data.cod;
-    currentWeather.imagePath = setWeatherImage(currentWeather.weather[0].icon);
+    if (response.data.cod === 200){
+        currentWeather.coord = response.data.coord;
+        currentWeather.weather = response.data.weather;
+        currentWeather.temp = response.data.main;
+        currentWeather.wind = response.data.wind;
+        currentWeather.clouds = response.data.clouds;
+        currentWeather.dt = response.data.dt;
+        currentWeather.sys = response.data.sys;
+        currentWeather.timezone = response.data.timezone;
+        currentWeather.id = response.data.id;
+        currentWeather.name = response.data.name;
+        currentWeather.cod = response.data.cod;
+        currentWeather.imagePath = setWeatherImage(currentWeather.weather[0].icon);
+    }
 }
 
 function setWeatherImage(thumb) {
