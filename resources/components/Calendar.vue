@@ -19,7 +19,8 @@
         <!-- TODO: adjust height -->
         <section class="col-span-7 flow-root relative h-screen">
             <event-modal :class="changeDisplay" :calendarEvent="newCalendarEvent"
-                @click.self="openModal = false"></event-modal>
+                @click.self="openModal = false"
+                @event-created="openModal = false"></event-modal>
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
                 <day-container  v-for="i in current.firstDay"
                         class="bg-slate-400"
@@ -30,6 +31,7 @@
                 </day-container>
                 <day-container v-for="j in current.numDays" 
                         class="bg-slate-50"
+                        :data-date="j + '-' + (current.month + 1)"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ j }} 
@@ -67,7 +69,7 @@ const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
 const calendarEvents = ref();
-const newCalendarEvent = ref({});
+const newCalendarEvent = ref({event: '', date: ''});
 const openModal = ref(false);
 
 const changeDisplay = computed(() => {
@@ -146,6 +148,7 @@ function openCalendarEvent(event) {
     } else {
         newCalendarEvent.value.date = current.value;
     }
+    
     openModal.value = true;
 }
 </script>
