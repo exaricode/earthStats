@@ -20,11 +20,12 @@
         <section class="col-span-7 flow-root relative h-screen">
             <event-modal :class="changeDisplay" :calendarEvent="newCalendarEvent"
                 @click.self="openModal = false"
-                @event-created="openModal = false"></event-modal>
+                @event-created="openModal = false"
+                @calendarEvent="(calendarEvent) => calendarEvents.value.push(calendarEvent)"></event-modal>
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
                 <day-container  v-for="i in current.firstDay"
                         class="bg-slate-400"
-                        @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
+                        @calendar-event="(calendarEvent) => getCalendarEvents()">
                     <template #day>
                         {{ current.previousMonth.days + i - current.firstDay }}
                     </template>

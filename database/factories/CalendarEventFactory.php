@@ -16,12 +16,13 @@ class CalendarEventFactory extends Factory
      */
     public function definition()
     {
+        $start = $this->faker->dateTimeBetween($startDate = '-1 months', $endDate = '+1 months');
         return [
             'user_id' => 1,
             'title' => $this->faker->word(),
             'desc' => $this->faker->sentence(),
-            'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->date(),
+            'start_date' => $start,
+            'end_date' => $start,
             'alarm_time' => $this->faker->date(),
             'reminder' => true
         ];

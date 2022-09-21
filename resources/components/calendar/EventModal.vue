@@ -99,11 +99,11 @@ function createCalendarEvent() {
         axios.post('createCalendarEvent', data)
             .then(response => response.data)
             .then(response => { 
-                console.assert(response.start_date == props.calendarEvent.date.year + '-' 
+                /* console.assert(response.start_date == props.calendarEvent.date.year + '-' 
                 + props.calendarEvent.date.month + '-' + props.calendarEvent.date.date, 'start_date not equal');
-                props.calendarEvent.event.target.innerHTML += "<div>" + response.title + "</div>";
+                props.calendarEvent.event.target.innerHTML += "<div>" + response.title + "</div>"; */
+                emits('eventCreated', response );
             });
-        emits('eventCreated');
     }
 }
 
