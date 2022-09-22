@@ -4,7 +4,7 @@
             class="w-fit h-2/3 mx-auto mt-8 bg-white border-2 border-black border-solid">
             <div>
                 <label for="title">title</label>
-                <input type="text" id="title" name="title" v-model="inputTitle" />
+                <input type="text" id="title" name="title" v-model="inputTitle" ref="titleInput" />
                     <span class="text-red-400">{{formError.title}}</span> 
             </div>
             <div>
@@ -14,8 +14,7 @@
             </div>
             <div>
                 <label for="start_date">Start</label>
-                <input type="date" id="start_date" name="start_date" v-model="startDateValue" />
-                    <span class="text-red-400">{{formError.start}}</span>
+                <input type="date" id="start_date" name="start_date" :value="startDateValue" />
             </div>
             <div>
                 <label for="end_date">End</label>
@@ -44,23 +43,30 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watchEffect } from 'vue';
 
 const props = defineProps({
     calendarEvent: Object
 });
 
-const emits = defineEmits(['eventCreated']);
+const emits = defineEmits(['eventCreated', 'newEvent']);
+
+const inputTitle = ref(null);
+const inputDesc = ref(null);
+const titleInput = ref(null);
 
 const formError = ref({
-    title: undefined,
-    desc: undefined,
-    start_date: undefined,
+    title: computed(() =>  inputTitle.value == "" || inputTitle.value == undefined ? 'Title is required' : '' ),
+    desc: computed(() => inputDesc.value == "" || inputDesc.value == undefined ? 'Desc is required' : '')
 });
 
-const inputTitle = ref(undefined);
-const inputDesc = ref(undefined);
+watchEffect(() => {
+    if (titleInput.value) {
+        titleInput.value.focus();   
+    }
+});
 
+// set the value for input start_date
 const startDateValue = computed(() => {
     let year = props.calendarEvent.date.year;
     let month = props.calendarEvent.date.month + 1 < 10 
@@ -68,8 +74,8 @@ const startDateValue = computed(() => {
         : (props.calendarEvent.date.month + 1);
 
     let day = props.calendarEvent.event.target == '' || !props.calendarEvent.event.target
-        ? '' : props.calendarEvent.event.target.innerText > 9 
-        ? props.calendarEvent.event.target.innerText : '0' + props.calendarEvent.event.target.innerText;
+        ? '' : props.calendarEvent.event.target.dataset['date'] > 9 
+        ? props.calendarEvent.event.target.dataset['date'] : '0' + props.calendarEvent.event.target.dataset['date'];
     return year + '-' + month + '-' + day;
 });
 
@@ -77,21 +83,18 @@ function createCalendarEvent() {
     const form = document.forms[0];
     const data = {};
     if (inputTitle.value != undefined) {
-        data.title = inputTitle.value;
-        formError.value.title = undefined;
-    } else {formError.value.title = 'Title is required'}
+        data.title = inputTitle.value;   
+    }
 
     if (inputDesc.value != undefined) {
         data.desc = inputDesc.value;
-        formError.value.desc = undefined;
-    } else { formError.value.desc = 'Description is required.'}
+    }
 
     if (startDateValue.value != undefined){
-        data.start_date = startDateValue.value;
-        formError.value.start_date = undefined;
-    } else { formError.value.start_date = 'Start date is required' }
+        data.start_date = form[2].value;
+    } 
     
-    data.end_date = !form[3].value ? startDateValue.value : form[3].value;
+    data.end_date = !form[3].value ? form[2].value : form[3].value;
     data.reminder = form[4].checked ? form[4].value : form[5].value
     data.alarm_time = data.reminder ? form[6].value : 0;
     
@@ -99,10 +102,10 @@ function createCalendarEvent() {
         axios.post('createCalendarEvent', data)
             .then(response => response.data)
             .then(response => { 
-                /* console.assert(response.start_date == props.calendarEvent.date.year + '-' 
-                + props.calendarEvent.date.month + '-' + props.calendarEvent.date.date, 'start_date not equal');
-                props.calendarEvent.event.target.innerHTML += "<div>" + response.title + "</div>"; */
-                emits('eventCreated', response );
+                emits('newEvent', response );
+                emits('eventCreated');
+                inputTitle.value = undefined;
+                inputDesc.value = undefined;
             });
     }
 }
@@ -122,6 +125,4 @@ label {
 input {
     margin-right: auto;
 }
-
-
 </style>
