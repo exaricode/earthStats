@@ -18,19 +18,29 @@
         </header>
         <!-- TODO: adjust height -->
         <section class="col-span-7 flow-root relative h-screen">
-            <event-modal :class="changeDisplay" :calendarEvent="newCalendarEvent"
-                @click.self="openModal = false"
-                @event-created="openModal = false"
-                @newEvent="(calendarEvent) => calendarEvents.push(calendarEvent)"></event-modal>
+            <calendar-event-create 
+                :class="changeCreateEventDisplay" 
+                :calendarEvent="newCalendarEvent"
+                @click.self="openCreateEvent = false"
+                @event-created="openCreateEvent = false"
+                @newEvent="(calendarEvent) => calendarEvents.push(calendarEvent)">
+            </calendar-event-create>
+            
+            <calendar-event-update 
+                :class="changeUpdateEventDisplay" 
+                :calendarEvent="updateCalendarEvent"
+                @click.self="openUpdateEvent = false">
+            </calendar-event-update>
+            
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
-                <day-container  v-for="i in current.firstDay"
+                <calendar-day-container  v-for="i in current.firstDay"
                         class="bg-slate-400"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ current.previousMonth.days + i - current.firstDay }}
                     </template>
-                </day-container>
-                <day-container v-for="j in current.numDays" :key="j + '-' + current.month" 
+                </calendar-day-container>
+                <calendar-day-container v-for="j in current.numDays" :key="j + '-' + current.month" 
                         class="bg-slate-50"
                         :data-date="j"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
@@ -39,20 +49,21 @@
                         <template v-if="calendarEvents != undefined">
                             <template v-for="i in calendarEvents" :key="i.title">
                                 <template v-if="new Date(i.start_date).getDate() == j">
-                                   <div @click.self="" >{{ i.title }}</div>
+                                   <div :data-id="i.id"
+                                    @click.self="openEventModal(i)" >{{ i.title }}</div>
                                 </template>
                                 <template v-else />
                             </template>
                         </template>
                     </template>
-                </day-container> 
-                <day-container v-for="k in (49 - current.numDays - current.firstDay)" 
+                </calendar-day-container> 
+                <calendar-day-container v-for="k in (49 - current.numDays - current.firstDay)" 
                             class="bg-slate-300"
                             @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ k }}
                     </template>
-                </day-container>
+                </calendar-day-container>
             </div>
         </section>
     </main>
@@ -63,20 +74,27 @@ import { ref, onBeforeMount, computed } from 'vue';
 import axios from 'axios';
 
 import NavBar from './navigation/NavBar.vue';
-import DayContainer from './calendar/DayContainer.vue';
+import CalendarDayContainer from './calendar/CalendarDayContainer.vue';
 import CalendarMonth from '../js/classes/calendarMonth';
-import EventModal from './calendar/EventModal.vue';
+import CalendarEventCreate from './calendar/CalandarEventCreate.vue';
+import CalendarEventUpdate from './calendar/CalendarEventUpdate.vue';
 
 const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
 const calendarEvents = ref();
 const newCalendarEvent = ref({event: '', date: ''});
-const openModal = ref(false);
+const updateCalendarEvent = ref();
+const openCreateEvent = ref(false);
+const openUpdateEvent = ref(false);
 
-const changeDisplay = computed(() => {
-   return openModal.value ? 'block' : 'hidden';
+const changeCreateEventDisplay = computed(() => {
+   return openCreateEvent.value ? 'block' : 'hidden';
 });
+
+const changeUpdateEventDisplay = computed(() => {
+    return openUpdateEvent.value ? 'block' : 'hidden';
+})
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const months = [{name: 'January', days: 31},
@@ -144,18 +162,27 @@ function openCalendarEvent(event) {
     // TODO: previous + next dates incorrect
     newCalendarEvent.value.event = event;
     if (event.target.classList.contains('bg-slate-400')) {
-        console.log('previous');
-        console.log(previous.value)
         newCalendarEvent.value.date = previous.value;
     } else if (event.target.classList.contains('bg-slate-300')) {
-        console.log('next');
-        console.log(next.value);
         newCalendarEvent.value.date = next.value;
     } else {
         newCalendarEvent.value.date = current.value;
     }
     
-    openModal.value = true;
+    openCreateEvent.value = true;
+}
+
+function openEventModal(savedEvent) {
+    openUpdateEvent.value = true;
+    updateCalendarEvent.value = {
+        id: savedEvent.id,
+        title: savedEvent.title,
+        desc: savedEvent.desc,
+        start_date: savedEvent.start_date,
+        end_date: savedEvent.end_date,
+        alarm: savedEvent.alarm,
+        reminder: savedEvent.reminder
+    }
 }
 </script>
 

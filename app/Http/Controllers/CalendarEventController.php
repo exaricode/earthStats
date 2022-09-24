@@ -24,4 +24,8 @@ class CalendarEventController extends Controller
         $calendarEvent->alarm_time = new Carbon($request->start_date);
         return CalendarEvent::createItem($calendarEvent);
     }
+
+    public static function deleteItem(Request $request) {
+        
+    }
 }
