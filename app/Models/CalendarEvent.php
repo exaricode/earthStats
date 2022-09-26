@@ -20,6 +20,10 @@ class CalendarEvent extends Model
         return $this->belongsTo(User::class);
     }
 
+    public static function getItem($id) {
+        return CalendarEvent::where('id', $id)->get();
+    }
+
     public static function getItems() {
         return CalendarEvent::all();
         // return CalendarEvent::where(User::id, 'user_id')->get()
@@ -36,5 +40,20 @@ class CalendarEvent extends Model
             'alarm_time' => $event->alarm_time,
             'reminder' => $event->reminder
         ]);
+    }
+
+    public static function deleteItem($id) {
+        $queryStatus= '';
+        try {
+            CalendarEvent::where('id', $id)->delete();
+            $queryStatus = 'Succesfull';
+        } catch (\Throwable $th) {
+            $queryStatus = 'No entry was found';
+        }
+        return $queryStatus;
+    }
+
+    public static function updateItem($col, $data, $id) {
+        return CalendarEvent::where('id', $id)->update([$col => $data]);
     }
 }

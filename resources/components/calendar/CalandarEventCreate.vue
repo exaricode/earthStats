@@ -4,7 +4,9 @@
             class="w-fit h-2/3 mx-auto mt-8 bg-white border-2 border-black border-solid">
             <div>
                 <label for="title">title</label>
-                <input type="text" id="title" name="title" v-model="inputTitle" ref="titleInput" />
+                <input type="text" id="title" name="title" 
+                    v-model="inputTitle" 
+                    ref="titleInput" />
                     <span class="text-red-400">{{formError.title}}</span> 
             </div>
             <div>
@@ -13,25 +15,26 @@
                     <span class="text-red-400">{{formError.desc}}</span> 
             </div>
             <div>
-                <label for="start_date">Start</label>
-                <input type="date" id="start_date" name="start_date" :value="startDateValue" />
+                <label for="startDate">Start</label>
+                <input type="date" id="startDate" name="startDate" :value="startDateValue" />
             </div>
             <div>
-                <label for="end_date">End</label>
-                <input type="date" id="end_date" name="end_date" />
+                <label for="endDate">End</label>
+                <input type="date" id="endDate" name="endDate" />
             </div>
 
             <div>
                 <p>Reminder 
-                    <input type="radio" name="reminder" id="reminder_yes" value="yes" >
-                    <label for="reminder_yes">Yes</label>
-                    <input type="radio" name="reminder" id="reminder_no" value="no" checked>
-                    <label for="reminder_no">No</label>
+                    <input type="radio" name="reminder" id="reminderYes" value="yes" >
+                    <label for="reminderYes">Yes</label>
+                    <input type="radio" name="reminder" id="reminderNo" value="no" checked>
+                    <label for="reminderNo">No</label>
                 </p>
             </div>
-            
-            <label for="alarm_time">Set alarm</label>
-            <input type="number" name="alarm_time" id="alarm_time" min="0" max="10" step="1">
+            <div>
+                <label for="alarmTime">Set alarm</label>
+                <input type="number" name="alarmTime" id="alarmTime" min="0" max="10" step="1">
+            </div>
             
             <div class="col-span-2">
                 <button type="submit" value="addEvent" id="addEvent"
@@ -66,7 +69,7 @@ watchEffect(() => {
     }
 });
 
-// set the value for input start_date
+// set the value for input startDate
 const startDateValue = computed(() => {
     let year = props.calendarEvent.date.year;
     let month = props.calendarEvent.date.month + 1 < 10 
@@ -91,14 +94,14 @@ function createCalendarEvent() {
     }
 
     if (startDateValue.value != undefined){
-        data.start_date = form[2].value;
+        data.startDate = form[2].value;
     } 
     
-    data.end_date = !form[3].value ? form[2].value : form[3].value;
+    data.endDate = !form[3].value ? form[2].value : form[3].value;
     data.reminder = form[4].checked ? form[4].value : form[5].value
-    data.alarm_time = data.reminder ? form[6].value : 0;
+    data.alarmTime = data.reminder ? form[6].value : 0;
     
-    if (!formError.value.title && !formError.value.desc && !formError.value.start_date) {
+    if (!formError.value.title && !formError.value.desc && !formError.value.startDate) {
         axios.post('createCalendarEvent', data)
             .then(response => response.data)
             .then(response => { 

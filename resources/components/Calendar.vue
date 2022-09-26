@@ -29,7 +29,9 @@
             <calendar-event-update 
                 :class="changeUpdateEventDisplay" 
                 :calendarEvent="updateCalendarEvent"
-                @click.self="openUpdateEvent = false">
+                @click.self="openUpdateEvent = false"
+                @event-updated="openUpdateEvent = false"
+                @event-deleted="(event) => removeCalendarEvent(event)">
             </calendar-event-update>
             
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
@@ -70,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, watch } from 'vue';
 import axios from 'axios';
 
 import NavBar from './navigation/NavBar.vue';
@@ -82,7 +84,7 @@ import CalendarEventUpdate from './calendar/CalendarEventUpdate.vue';
 const current = ref(new CalendarMonth(new Date()));
 const previous = ref();
 const next = ref();
-const calendarEvents = ref();
+const calendarEvents = ref([]);
 const newCalendarEvent = ref({event: '', date: ''});
 const updateCalendarEvent = ref();
 const openCreateEvent = ref(false);
@@ -126,7 +128,8 @@ async function getCalendarEvents() {
             }
                 });
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.log(err));
+    console.log(calendarEvents.value);
 }
 
 // set the month for a CalendarMonth
@@ -183,6 +186,16 @@ function openEventModal(savedEvent) {
         alarm: savedEvent.alarm,
         reminder: savedEvent.reminder
     }
+}
+
+function removeCalendarEvent(event) {
+    // calendarEvents.value;
+    console.log(calendarEvents.value.findIndex(elem => elem.id == event.id))
+    console.log(calendarEvents.value);
+    let index = calendarEvents.value.findIndex(elem => elem.id == event.id);
+    calendarEvents.value.splice(index, 1);
+    console.log(calendarEvents.value);
+
 }
 </script>
 

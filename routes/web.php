@@ -51,3 +51,4 @@ Route::post('getForeCastWeather', [OpenWeatherController::class, 'getForeCastWea
 Route::get('getCalendarEvents', [CalendarEventController::class, 'getItems']);
 Route::post('createCalendarEvent', [CalendarEventController::class, 'createItem']);
 Route::post('deleteCalendarEvent', [CalendarEventController::class, 'deleteItem']);
+Route::post('updateCalendarEvent', [CalendarEventController::class, 'updateItem']);
