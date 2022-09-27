@@ -11,7 +11,7 @@ class CalendarEventController extends Controller
 {
     public static function getItem($id) {
 
-        return CalendarEvent::getItem($id);
+        return CalendarEvent::getItem($id)->first();
     }
 
     public static function getItems() {
@@ -39,13 +39,13 @@ class CalendarEventController extends Controller
 
     public static function updateItem(Request $request) {
         if ($request->id) {
-            $oldEvent = CalendarEventController::getItem($request->id)[0];
+            $oldEvent = CalendarEventController::getItem($request->id);
             
             if (!empty($request->title) && $oldEvent->title != $request->title) {
-               return CalendarEvent::updateItem('title', $request->title, $request->id);
+               CalendarEvent::updateItem('title', $request->title, $request->id);
             }
 
-            // CalendarEvent::updateItem($data);
+            return CalendarEventController::getItem($request->id);
         }
     }
 }

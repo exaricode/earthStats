@@ -119,21 +119,25 @@ const editReminder = ref(true);
 const editAlarm = ref(true);
 
 function updateEvent(event) {
-    editTitle.value = false;
-    editDesc.value = false;
-    editStartDate.value = false;
-    editEndDate.value = false;
-    editReminder.value = false;
-    editAlarm.value = false; 
+    editTitle.value = true;
+    editDesc.value = true;
+    editStartDate.value = true;
+    editEndDate.value = true;
+    editReminder.value = true;
+    editAlarm.value = true; 
 
     axios.post('updateCalendarEvent', event)
-        .then(response => console.log(response));
+        .then(response =>{ 
+            console.log(props.calendarEvent);
+
+            props.calendarEvent.title = response.data.title;
+            console.log(props.calendarEvent);
+        });
 }
 
 // TODO: focus input
 onMounted(() => {
     watchEffect(() => {
-        console.log('watcheffect')
         if (inputTitle.value && !editTitle.value) {
             console.log('title ')
             inputTitle.value.focus();
