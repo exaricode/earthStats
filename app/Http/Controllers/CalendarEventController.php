@@ -9,10 +9,11 @@ use stdClass;
 
 class CalendarEventController extends Controller
 {
-    public function getItem($id) {
+    public static function getItem($id) {
 
         return CalendarEvent::getItem($id);
     }
+
     public static function getItems() {
         return CalendarEvent::getItems();
     }
@@ -38,13 +39,13 @@ class CalendarEventController extends Controller
 
     public static function updateItem(Request $request) {
         if ($request->id) {
-            $oldEvent = getItems($request->id);
+            $oldEvent = CalendarEventController::getItem($request->id)[0];
             
             if (!empty($request->title) && $oldEvent->title != $request->title) {
-                CalendarEvent::updateItem('title', $request->title, $request->id);
+               return CalendarEvent::updateItem('title', $request->title, $request->id);
             }
 
-            CalendarEvent::updateItem($data);
+            // CalendarEvent::updateItem($data);
         }
     }
 }

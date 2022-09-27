@@ -188,17 +188,12 @@ function openEventModal(savedEvent) {
     }
 }
 
-function removeCalendarEvent(event) {
-    // calendarEvents.value;
-    console.log(calendarEvents.value.findIndex(elem => elem.id == event.id))
-    console.log(calendarEvents.value);
+function removeCalendarEvent(event) {    
     let index = calendarEvents.value.findIndex(elem => elem.id == event.id);
     calendarEvents.value.splice(index, 1);
-    console.log(calendarEvents.value);
-
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
