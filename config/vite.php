@@ -20,7 +20,8 @@ return [
                     'resources/js/app.js',
                     'resources/js/clock.js',
                     'resources/js/weather.js',
-                    'resources/js/calendar.js'
+                    'resources/js/calendar.js',
+                    'resources/js/valuta.js'
                 ],
                 'ignore' => '/\\.(d\\.ts|json)$/',
             ],
