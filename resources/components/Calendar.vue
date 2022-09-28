@@ -30,7 +30,8 @@
                 :class="changeUpdateEventDisplay" 
                 :calendarEvent="updateCalendarEvent"
                 @click.self="openUpdateEvent = false"
-                @event-updated="openUpdateEvent = false"
+                @event-close="openUpdateEvent = false;"
+                @event-updated="(event) => updateCalendar(event)"
                 @event-deleted="(event) => removeCalendarEvent(event)">
             </calendar-event-update>
             
@@ -129,7 +130,6 @@ async function getCalendarEvents() {
                 });
         })
         .catch((err) => console.log(err));
-    console.log(calendarEvents.value);
 }
 
 // set the month for a CalendarMonth
@@ -188,7 +188,12 @@ function openEventModal(savedEvent) {
     }
 }
 
-function removeCalendarEvent(event) {    
+function updateCalendar(event) {
+    let index = calendarEvents.value.findIndex(elem => elem.id == event.id);
+    calendarEvents.value[index] = event;
+}
+
+function removeCalendarEvent(event) {  
     let index = calendarEvents.value.findIndex(elem => elem.id == event.id);
     calendarEvents.value.splice(index, 1);
 }
