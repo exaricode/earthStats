@@ -194,6 +194,10 @@ function updateCalendar(event) {
 }
 
 function removeCalendarEvent(event) {  
+<<<<<<< HEAD
+=======
+    console.log(event) ;
+>>>>>>> 009d80108763aadec134a77257644a9fb77149d6
     let index = calendarEvents.value.findIndex(elem => elem.id == event.id);
     calendarEvents.value.splice(index, 1);
 }
