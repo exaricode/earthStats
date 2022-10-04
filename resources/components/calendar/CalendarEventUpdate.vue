@@ -14,11 +14,9 @@
                         :disabled="editTitle"
                         v-model="calendarEvent.title"
                         @blur="editTitle = editTitle ? false : true" />
-                        <button-input-edit 
+                        <ButtonInputEdit 
                             :editBool="editTitle"
-                            @edit-input="(editInput) => editTitle = editInput ? true : false">
-                        </button-input-edit>
-                         
+                            @edit-input="(editInput) => editTitle = editInput ? true : false" />
                 </div>
                 <div>
                     <label for="updateDesc">description</label>
@@ -27,10 +25,9 @@
                         :disabled="editDesc"
                         v-model="calendarEvent.desc"
                         @blur="editDesc = editDesc ? false : true" />
-                        <button-input-edit
+                        <ButtonInputEdit
                             :editBool="editDesc"
-                            @edit-input="(editInput) => editDesc = editInput ? true : false">
-                        </button-input-edit>
+                            @edit-input="(editInput) => editDesc = editInput ? true : false" />
                 </div>
                 <div>
                     <label for="updateStartDate">Start</label>
@@ -38,10 +35,9 @@
                         ref="inputStartDate"
                         :disabled="editStartDate"
                         v-model="calendarEvent.start_date" />
-                        <button-input-edit
+                        <ButtonInputEdit
                             :editBool="editStartDate"
-                            @edit-input="(editInput) => editStartDate = editInput ? true : false">
-                        </button-input-edit>
+                            @edit-input="(editInput) => editStartDate = editInput ? true : false" />
                 </div>
                 <div>
                     <label for="updateEndDate">End</label>
@@ -49,42 +45,49 @@
                         ref="inputEndDate"
                         :disabled="editEndDate"
                         v-model="calendarEvent.end_date" />
-                        <button-input-edit
+                        <ButtonInputEdit
                             :editBool="editEndDate"
-                            @edit-input="(editInput) => editEndDate = editInput ? true : false">
-                        </button-input-edit>
+                            @edit-input="(editInput) => editEndDate = editInput ? true : false" />
                 </div>
                 <div>
-                    Reminder
-                    <div>
-                    <input type="radio" name="updateReminder" id="updateReminderYes" 
-                        value="yes" 
-                        :disabled="editReminder" 
-                        checked="calendarEvent.reminder == 'yes'">
-                    <label for="updateReminderYes">Yes</label>
-                    <input type="radio" name="updateReminder" id="updateReminderNo" 
-                        value="no" 
-                        :disabled="editReminder"
-                        checked="calendarEvent.reminder == 'no'" >
-                    <label for="updateReminderNo">No</label>
-                    </div>
-                    <button-input-edit
+                    <fieldset>
+                        <legend>Reminder</legend>
+                        <label for="updateReminderYes">
+                            <input type="radio" name="updateReminder" id="updateReminderYes" 
+                                value="yes" 
+                                :disabled="editReminder" 
+                                checked="calendarEvent.reminder == 'yes'">
+                        Yes</label>
+                        <label for="updateReminderNo">
+                            <input type="radio" name="updateReminder" id="updateReminderNo" 
+                            value="no" 
+                            :disabled="editReminder"
+                            checked="calendarEvent.reminder == 'no'" >
+                        No</label>
+                    </fieldset>
+                    <ButtonInputEdit
                             :editBool="editReminder"
-                            @edit-input="(editInput) => editReminder = editInput ? true : false">
-                        </button-input-edit>
+                            @edit-input="(editInput) => editReminder = editInput ? true : false" />
                 </div>
                 <div>
                     <label for="updateAlarmTime"></label>
                     <input type="number" name="updateAlarmTime" id="updateAlarmTime"
                         v-model="calendarEvent.alarm"
                         :disabeld="editAlarm">
-                        <button-input-edit
+                        <ButtonInputEdit
                             :editBool="editAlarm"
-                            @edit-input="(editInput) => editAlarm = editInput ? true : false">
-                        </button-input-edit>
+                            @edit-input="(editInput) => editAlarm = editInput ? true : false" />
                 </div>
-                <button @click.prevent="updateEvent(calendarEvent)">update</button>
-                <button @click.prevent="deleteEvent(calendarEvent)">delete</button>
+                <div>
+                    <span class="col-start-2">
+                        <ButtonSubmit :btn-value="'update'"
+                            :extra-style-object="{backgroundColor: 'rgba(30,30,200,.8)'}"
+                            @click.prevent="updateEvent(calendarEvent)" />
+                        <ButtonSubmit :btn-value="'delete'"
+                            :extra-style-object="{backgroundColor: 'rgba(200, 30, 30, 1)'}"
+                            @click.prevent="deleteEvent(calendarEvent)" />
+                    </span>
+                </div>
             </template>
         </form>
     </div>
@@ -95,6 +98,7 @@ import axios from 'axios';
 import { ref, watchEffect, onMounted } from 'vue';
 
 import ButtonInputEdit from './ButtonInputEdit.vue';
+import ButtonSubmit from './ButtonSubmit.vue';
 
 const props = defineProps({
     calendarEvent: Object
@@ -166,17 +170,27 @@ function deleteEvent(event) {
 
 <style scoped>
 form {
-    width: 75%;
+    width: 50%;
     height: 75%;
     margin: 2rem auto;
-    
-    
 }
 
 form > div {
     display: grid;
-    grid-template-columns: 1fr 75% 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
     width: 100%;
+}
+
+span, fieldset {
+    grid-column-start: 2;
+}
+
+fieldset > label > input {
+    width: fit-content;
+}
+
+fieldset > label {
+    margin-inline-start: .5rem;
 }
 
 label, input {

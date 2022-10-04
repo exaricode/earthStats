@@ -4,9 +4,9 @@
     </div>
     <main class="grid grid-cols-7">
         <header class="col-span-7 grid grid-cols-7">
-            <h2 class="col-span-7 grid grid-cols-4 font-medium text-3xl py-2">
+            <h2 class="col-span-7 grid grid-cols-5 font-medium text-3xl py-2">
                 <button @click="previousMonth()" class="pl-2 hover:scale-150" value="previous">&#10094;</button>
-                <span class="mx-auto col-span-2 inline-block">
+                <span class="mx-auto col-span-3 inline-block">
                 {{ days[current.day] }}  {{ current.date }}  {{ months[current.month].name }}  {{ current.year}}
                 </span>
                 <button @click="nextMonth()" class="pr-2 hover:scale-150" value="next">&#10095;</button>
@@ -200,5 +200,16 @@ function removeCalendarEvent(event) {
 </script>
 
 <style scoped>
+main {
+    margin: 0 .5rem;
+}
 
+h2 > span {
+    padding-top: .2rem;
+    font-size: 2rem;
+}
+
+button {
+    padding-bottom: .5rem;
+}
 </style>

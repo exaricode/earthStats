@@ -37,13 +37,23 @@ class CalendarEventController extends Controller
         }
     }
 
+    /* id | user_id | title | desc | start_date | 
+     *   end_date | alarm_time | reminder
+     */
     public static function updateItem(Request $request) {
         if ($request->id) {
             $oldEvent = CalendarEventController::getItem($request->id);
             
-            if (!empty($request->title) && $oldEvent->title != $request->title) {
-               CalendarEvent::updateItem('title', $request->title, $request->id);
-            }
+            Validator::make($request->all(), [
+                'user_id' => ['required'],
+                'title'=> ['required', 'max:255'],
+                'desc' => ['nullable'],
+                'start_date' => ['required', 'date'],
+                'end_date' => ['nullable', 'date'],
+                'reminder' => [''],
+                'alarm' => ['nullable']
+            ])->validate();
+
 
             return CalendarEventController::getItem($request->id);
         }
