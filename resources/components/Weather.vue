@@ -1,29 +1,25 @@
 <template>
     <div>
-        <nav-bar></nav-bar>
+        <NavBar />
     </div>
     <main class="flex flex-wrap">
-        <drag-container>
-            <weather-component :place="'local'"
-                                :name="'Local Weather'">
-            </weather-component>
-        </drag-container>
-        <drag-container>
-            <weather-component :place="'New+York'"
-                                :name="'New York'">
-            </weather-component>
-        </drag-container>
-        <drag-container>
-            <weather-component :place="'London'"
-                                :name="'London'">
-            </weather-component>
-        </drag-container>
-        <drag-container>
-            <weather-component :place="'Tokyo'"
-                                :name="'Tokyo'">
-            </weather-component>
-        </drag-container>
-        <fore-cast-weather-component></fore-cast-weather-component>
+        <DragContainer>
+            <WeatherComponent :place="'local'"
+                                :name="'Local Weather'" />
+        </DragContainer>
+        <DragContainer>
+            <WeatherComponent :place="'New+York'"
+                                :name="'New York'" />
+        </DragContainer>
+        <DragContainer>
+            <WeatherComponent :place="'London'"
+                                :name="'London'" />
+        </DragContainer>
+        <DragContainer>
+            <WeatherComponent :place="'Tokyo'"
+                                :name="'Tokyo'" />
+        </DragContainer>
+        <ForeCastWeatherComponent />
     </main>
 </template>
 
