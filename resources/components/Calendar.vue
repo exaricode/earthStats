@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav-bar></nav-bar>
+        <NavBar />
     </div>
     <main class="grid grid-cols-7">
         <header class="col-span-7 grid grid-cols-7">
@@ -18,32 +18,30 @@
         </header>
         <!-- TODO: adjust height -->
         <section class="col-span-7 flow-root relative h-screen">
-            <calendar-event-create 
+            <CalendarEventCreate  
                 :class="changeCreateEventDisplay" 
                 :calendarEvent="newCalendarEvent"
                 @click.self="openCreateEvent = false"
                 @event-created="openCreateEvent = false"
-                @newEvent="(calendarEvent) => calendarEvents.push(calendarEvent)">
-            </calendar-event-create>
+                @newEvent="(calendarEvent) => calendarEvents.push(calendarEvent)" />
             
-            <calendar-event-update 
+            <CalendarEventUpdate
                 :class="changeUpdateEventDisplay" 
                 :calendarEvent="updateCalendarEvent"
                 @click.self="openUpdateEvent = false"
                 @event-close="openUpdateEvent = false;"
                 @event-updated="(event) => updateCalendar(event)"
-                @event-deleted="(event) => removeCalendarEvent(event)">
-            </calendar-event-update>
+                @event-deleted="(event) => removeCalendarEvent(event)" />
             
             <div class="w-full h-screen grid grid-cols-7 grid-rows-[repeat(7,_minmax(0,_1fr))]">
-                <calendar-day-container  v-for="i in current.firstDay"
+                <CalendarDayContainer  v-for="i in current.firstDay"
                         class="bg-slate-400"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ current.previousMonth.days + i - current.firstDay }}
                     </template>
-                </calendar-day-container>
-                <calendar-day-container v-for="j in current.numDays" :key="j + '-' + current.month" 
+                </CalendarDayContainer>
+                <CalendarDayContainer v-for="j in current.numDays" :key="j + '-' + current.month" 
                         class="bg-slate-50"
                         :data-date="j"
                         @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
@@ -59,14 +57,14 @@
                             </template>
                         </template>
                     </template>
-                </calendar-day-container> 
-                <calendar-day-container v-for="k in (49 - current.numDays - current.firstDay)" 
+                </CalendarDayContainer> 
+                <CalendarDayContainer v-for="k in (49 - current.numDays - current.firstDay)" 
                             class="bg-slate-300"
                             @calendar-event="(calendarEvent) => openCalendarEvent(calendarEvent)">
                     <template #day>
                         {{ k }}
                     </template>
-                </calendar-day-container>
+                </CalendarDayContainer>
             </div>
         </section>
     </main>
@@ -79,7 +77,7 @@ import axios from 'axios';
 import NavBar from './navigation/NavBar.vue';
 import CalendarDayContainer from './calendar/CalendarDayContainer.vue';
 import CalendarMonth from '../js/classes/calendarMonth';
-import CalendarEventCreate from './calendar/CalandarEventCreate.vue';
+import CalendarEventCreate from './calendar/CalendarEventCreate.vue';
 import CalendarEventUpdate from './calendar/CalendarEventUpdate.vue';
 
 const current = ref(new CalendarMonth(new Date()));

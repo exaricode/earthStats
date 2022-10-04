@@ -1,5 +1,7 @@
 <template>
-    <div :style="divStyleObject"
+    <div 
+        class="w-full h-full"
+        :style="divStyleObject"
         v-for="options in optionSelection" :key="options.code">
         <img :style="imgStyleObject"
             :src="imageUrl(options.code)" />

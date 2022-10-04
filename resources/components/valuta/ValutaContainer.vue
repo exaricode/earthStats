@@ -1,5 +1,5 @@
 <template>
-    <valuta-select class="w-full h-full" :optionSelection="valuta">
+    <valuta-select :optionSelection="valuta">
 
     </valuta-select>
 </template>

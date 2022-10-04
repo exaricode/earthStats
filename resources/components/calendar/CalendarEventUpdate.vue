@@ -4,9 +4,9 @@
             class="bg-white border-2 border-black border-solid text-center">
 
             <template v-if="calendarEvent">
-                <div>
+                <!-- <div>
                     {{ calendarEvent.id }}
-                </div>
+                </div> -->
                 <div>
                     <label for="updateTitle">title</label>
                     <input type="text" id="updateTitle" name="updateTitle" 
@@ -173,16 +173,30 @@ form {
     width: 50%;
     height: 75%;
     margin: 2rem auto;
+    border-radius: 2% 2%;
+    box-shadow: 2px 2px 10px rgb(2, 8, 19),
+            -2px -2px 10px rgb(2,8,19),
+            0 0 2px 2px inset rgb(160, 160, 160);
 }
 
 form > div {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 2fr 6fr 1fr;
     width: 100%;
+    justify-items: center;
+    margin: .2rem auto;
+}
+
+form > div:first-child {
+    margin-block-start: 1rem;
 }
 
 span, fieldset {
     grid-column-start: 2;
+}
+
+fieldset {
+    justify-self: start;
 }
 
 fieldset > label > input {
@@ -204,5 +218,7 @@ label {
 
 input {
     margin-right: auto;
+    width: 90%;
+    border: 2px inset black
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full bg-slate-600/50 z-50 absolute">
         <form method="POST" action="/createCalendarEvent" enctype="multipart/form-data"
-            class="w-fit h-2/3 mx-auto mt-8 bg-white border-2 border-black border-solid">
+            class="bg-white border-2 border-black border-solid">
             <div>
                 <label for="title">title</label>
                 <input type="text" id="title" name="title" 
@@ -42,7 +42,7 @@
                 <ButtonSubmit id="addEvent"
                     @click.prevent="createCalendarEvent"
                     :btnValue="'add'"
-                    :extra-style-object="{backgroundColor: 'rgba(50,50,200,1)'}" />
+                    :extra-style-object="{backgroundColor: 'rgba(50,200,250,1)'}" />
             </div>
         </form>
     </div>
@@ -125,19 +125,31 @@ form {
     width: 50%;
     height: 75%;
     margin: 2rem auto;
+    border-radius: 2% 2%;
+    box-shadow: 2px 2px 10px rgb(2, 8, 19),
+            -2px -2px 10px rgb(2,8,19),
+            0 0 2px 2px inset rgb(160, 160, 160);
 }
 
 form > div {
     display: grid;
     grid-template-columns: 1fr 5fr;
     width: 100%;
-    /* border-bottom: 2px inset black; */
+    justify-items: center;
+    margin: .2rem auto;
 }
 
-span, fieldset {
+form > div:first-child {
+    margin-block-start: 1rem;
+}
+
+fieldset {
     grid-column-start: 2;
 }
 
+span, button {
+    grid-column: 1 / -1;
+}
 fieldset > label > input {
     width: fit-content;
 }
