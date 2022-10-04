@@ -105,7 +105,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits([
-    'event-updated', 'event-deleted'
+    'event-updated', 'event-deleted', 'event-close'
 ])
 
 // input refs
@@ -122,22 +122,9 @@ const editEndDate = ref(true);
 const editReminder = ref(true);
 const editAlarm = ref(true);
 
-function updateEvent(event) {
-    editTitle.value = false;
-    editDesc.value = false;
-    editStartDate.value = false;
-    editEndDate.value = false;
-    editReminder.value = false;
-    editAlarm.value = false; 
-
-    axios.post('updateCalendarEvent', event)
-        .then(response => console.log(response));
-}
-
 // TODO: focus input
 onMounted(() => {
     watchEffect(() => {
-        console.log('watcheffect')
         if (inputTitle.value && !editTitle.value) {
             console.log('title ')
             inputTitle.value.focus();
@@ -155,11 +142,26 @@ onMounted(() => {
     });
 });
 
+function updateEvent(event) {
+    editTitle.value = true;
+    editDesc.value = true;
+    editStartDate.value = true;
+    editEndDate.value = true;
+    editReminder.value = true;
+    editAlarm.value = true; 
+
+    axios.post('updateCalendarEvent', event)
+        .then(response => {
+            emits('event-updated', response.data);
+            emits('event-close');
+        });
+}
+
 function deleteEvent(event) {
     axios.post('deleteCalendarEvent', event)
         .then(response => {
             if (response.data == 'Succesfull') {
-                emits('event-updated');
+                emits('event-close');
                 emits('event-deleted', event);
             }
         });             

@@ -11,7 +11,7 @@ class CalendarEventController extends Controller
 {
     public static function getItem($id) {
 
-        return CalendarEvent::getItem($id);
+        return CalendarEvent::getItem($id)->first();
     }
 
     public static function getItems() {
@@ -42,7 +42,7 @@ class CalendarEventController extends Controller
      */
     public static function updateItem(Request $request) {
         if ($request->id) {
-            $oldEvent = CalendarEventController::getItem($request->id)[0];
+            $oldEvent = CalendarEventController::getItem($request->id);
             
             Validator::make($request->all(), [
                 'user_id' => ['required'],
@@ -55,7 +55,7 @@ class CalendarEventController extends Controller
             ])->validate();
 
 
-            // CalendarEvent::updateItem($data);
+            return CalendarEventController::getItem($request->id);
         }
     }
 }
