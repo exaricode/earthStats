@@ -54,7 +54,6 @@ class CalendarEvent extends Model
     }
 
     public static function updateItem($col, $data, $id) {
-        
         return CalendarEvent::where('id', $id)->update([$col => $data]);
     }
 }
