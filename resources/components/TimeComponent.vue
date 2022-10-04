@@ -1,5 +1,5 @@
 <template>
-    <container-fieldset :legend="title">
+    <ContainerFieldset :legend="title">
         <template #first>
             <div id="clock" :style="sizeObject"
                 class="border-2 border-black border-solid m-auto flow-root relative text-center">
@@ -21,7 +21,7 @@
                 <div id="hour" :style="[hand, hour]"></div>
             </div>
         </template>
-    </container-fieldset>
+    </ContainerFieldset>
 </template>
 
 <script setup>

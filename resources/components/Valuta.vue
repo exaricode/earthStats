@@ -1,16 +1,15 @@
 <template>
     <div>
-        <nav-bar></nav-bar>
+        <NavBar />
     </div> 
     <main>
-        <valuta-header>
+        <ValutaHeader>
             <template #header>Currency converter</template>
             <template #subHeader>Placeholder for subheader</template>
-        </valuta-header>
+        </ValutaHeader>
 
         <!--TODO: api exchange rates https://fixer.io/ -->
-        <valuta-container>
-        </valuta-container>
+        <ValutaContainer />
     </main>
 </template>
 

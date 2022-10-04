@@ -1,30 +1,25 @@
 <template>
     <div>
-        <nav-bar></nav-bar>
+        <NavBar />
     </div>
     <main class="flex flex-wrap">
-        <drag-container>
-            <time-component :timezone="''"
-                            :title="'Local Time'">
-            </time-component>
-        </drag-container>
-        <drag-container>
-            <time-component :title="'New York'"
-                            :timezone="'America/New_York'">
-            </time-component>
-        </drag-container>
-        <drag-container>
-            <time-component :title="'London'"
-                            :timezone="'Europe/London'">
-
-            </time-component>
-        </drag-container>
-        <drag-container>
-            <time-component :title="'Tokyo'"
-                            :timezone="'Asia/Tokyo'">
-            </time-component>
-        </drag-container>
-    </main>"
+        <DragContainer>
+            <TimeComponent :timezone="''"
+                            :title="'Local Time'" />
+        </DragContainer>
+        <DragContainer>
+            <TimeComponent :title="'New York'"
+                            :timezone="'America/New_York'" />
+        </DragContainer>
+        <DragContainer>
+            <TimeComponent :title="'London'"
+                            :timezone="'Europe/London'" />
+        </DragContainer>
+        <DragContainer>
+            <TimeComponent :title="'Tokyo'"
+                            :timezone="'Asia/Tokyo'" />
+        </DragContainer>
+    </main>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-    <container-fieldset :legend="name">
+    <ContainerFieldset :legend="name">
         <template #first>
             <div v-if="currentWeather != null && currentWeather != undefined" 
                 class="flex flex-wrap items-center justify-around h-full">
@@ -26,7 +26,7 @@
                 }" />
             </div>
         </template>
-    </container-fieldset>
+    </ContainerFieldset>
 </template>
 
 <script setup>

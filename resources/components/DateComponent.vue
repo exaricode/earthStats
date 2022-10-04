@@ -1,12 +1,12 @@
 <template>
     <div>
-        <container-fieldset :legend="'Current Date'">
+        <ContainerFieldset :legend="'Current Date'">
             <template #first>
                 <div> {{ day }} </div>
             
                 <div> {{ today + ' ' + month + ' ' + year}} </div>
             </template>
-        </container-fieldset>
+        </ContainerFieldset>
     </div>
 </template>
 
