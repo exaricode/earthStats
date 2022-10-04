@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenWeatherController;
 use App\Http\Controllers\CalendarEventController;
+use App\Http\Controllers\ValutaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +44,21 @@ Route::get('calendar', function () {
     return view('calendar');
 });
 
+Route::get('valuta', function () {
+    return view('valuta');
+});
+
+// Weather CRUD routes
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
 Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWeatherPos']);
 Route::post('getCurrentWeatherPlace', [OpenWeatherController::class, 'getCurrentWeatherPlace']);
 Route::post('getForeCastWeather', [OpenWeatherController::class, 'getForeCastWeather']);
 
+// Calendar Crud Routes
 Route::get('getCalendarEvents', [CalendarEventController::class, 'getItems']);
 Route::post('createCalendarEvent', [CalendarEventController::class, 'createItem']);
 Route::post('deleteCalendarEvent', [CalendarEventController::class, 'deleteItem']);
 Route::post('updateCalendarEvent', [CalendarEventController::class, 'updateItem']);
+
+// Valuta Crud Routs
+Route::get('loadJson', [ValutaController::class, 'loadJson']);

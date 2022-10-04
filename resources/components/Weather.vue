@@ -24,7 +24,6 @@
             </weather-component>
         </drag-container>
         <fore-cast-weather-component></fore-cast-weather-component>
-        
     </main>
 </template>
 
