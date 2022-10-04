@@ -24,21 +24,25 @@
             </div>
 
             <div>
-                <p>Reminder 
-                    <input type="radio" name="reminder" id="reminderYes" value="yes" >
-                    <label for="reminderYes">Yes</label>
-                    <input type="radio" name="reminder" id="reminderNo" value="no" checked>
-                    <label for="reminderNo">No</label>
-                </p>
+                <fieldset>
+                    <legend>Reminder</legend>
+                    <label for="reminderYes">
+                        <input type="radio" name="reminder" id="reminderYes" value="yes" >
+                    Yes</label>
+                    <label for="reminderNo">
+                        <input type="radio" name="reminder" id="reminderNo" value="no" checked>
+                    No</label>
+                </fieldset>
             </div>
             <div>
                 <label for="alarmTime">Set alarm</label>
                 <input type="number" name="alarmTime" id="alarmTime" min="0" max="10" step="1">
             </div>
-            
-            <div class="col-span-2">
-                <button type="submit" value="addEvent" id="addEvent"
-                    class="mx-auto" @click.prevent="createCalendarEvent">add</button>
+            <div>
+                <ButtonSubmit id="addEvent"
+                    @click.prevent="createCalendarEvent"
+                    :btnValue="'add'"
+                    :extra-style-object="{backgroundColor: 'rgba(50,50,200,1)'}" />
             </div>
         </form>
     </div>
@@ -47,6 +51,8 @@
 <script setup>
 import axios from 'axios';
 import { ref, computed, onMounted, watchEffect } from 'vue';
+
+import ButtonSubmit from './ButtonSubmit.vue';
 
 const props = defineProps({
     calendarEvent: Object
@@ -112,10 +118,34 @@ function createCalendarEvent() {
             });
     }
 }
-
 </script>
 
 <style scoped>
+form {
+    width: 50%;
+    height: 75%;
+    margin: 2rem auto;
+}
+
+form > div {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    width: 100%;
+    /* border-bottom: 2px inset black; */
+}
+
+span, fieldset {
+    grid-column-start: 2;
+}
+
+fieldset > label > input {
+    width: fit-content;
+}
+
+fieldset > label {
+    margin-inline-start: .5rem;
+}
+
 label, input {
     margin: .5rem .5rem;
     align-self: center;
@@ -127,5 +157,9 @@ label {
 
 input {
     margin-right: auto;
+    width: 90%;
+    border: 2px inset black
 }
+
+
 </style>
