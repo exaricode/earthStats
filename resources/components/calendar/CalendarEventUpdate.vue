@@ -2,11 +2,7 @@
     <div class="w-full h-full bg-slate-600/50 z-50 absolute">
         <form method="POST" action="/updateCalendarEvent" enctype="multipart/form-data" 
             class="bg-white border-2 border-black border-solid text-center">
-
             <template v-if="calendarEvent">
-                <!-- <div>
-                    {{ calendarEvent.id }}
-                </div> -->
                 <div>
                     <label for="updateTitle">title</label>
                     <input type="text" id="updateTitle" name="updateTitle" 
@@ -56,13 +52,13 @@
                             <input type="radio" name="updateReminder" id="updateReminderYes" 
                                 value="yes" 
                                 :disabled="editReminder" 
-                                checked="calendarEvent.reminder == 'yes'">
+                                :checked="calendarEvent.reminder == 1">
                         Yes</label>
                         <label for="updateReminderNo">
                             <input type="radio" name="updateReminder" id="updateReminderNo" 
                             value="no" 
                             :disabled="editReminder"
-                            checked="calendarEvent.reminder == 'no'" >
+                            :checked="calendarEvent.reminder == 0" >
                         No</label>
                     </fieldset>
                     <ButtonInputEdit
@@ -72,7 +68,7 @@
                 <div>
                     <label for="updateAlarmTime"></label>
                     <input type="number" name="updateAlarmTime" id="updateAlarmTime"
-                        v-model="calendarEvent.alarm"
+                        :value="calendarEvent.alarm_time"
                         :disabeld="editAlarm">
                         <ButtonInputEdit
                             :editBool="editAlarm"
@@ -126,11 +122,9 @@ const editAlarm = ref(true);
 onMounted(() => {
     watchEffect(() => {
         if (inputTitle.value && !editTitle.value) {
-            console.log('title ')
             inputTitle.value.focus();
         }
         if(inputDesc.value && !editDesc.value) {
-            console.log(inputDesc.value)
             inputDesc.value.focus();
         }
         if(inputStartDate.value && !editStartDate.value) {
@@ -150,11 +144,14 @@ function updateEvent(event) {
     editReminder.value = true;
     editAlarm.value = true; 
 
+    // TODO: Add dynamic user_id
+    event.user_id = 1;
     axios.post('updateCalendarEvent', event)
         .then(response => {
             emits('event-updated', response.data);
             emits('event-close');
         });
+    
 }
 
 function deleteEvent(event) {

@@ -23,7 +23,7 @@ class CalendarEventFactory extends Factory
             'desc' => $this->faker->sentence(),
             'start_date' => $start,
             'end_date' => $start,
-            'alarm_time' => $this->faker->date(),
+            'alarm_time' => random_int(0, 1),
             'reminder' => true
         ];
     }

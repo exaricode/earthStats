@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\CalendarEvent;
 use Carbon\Carbon;
 use stdClass;
@@ -26,7 +27,7 @@ class CalendarEventController extends Controller
         $calendarEvent->start_date = $request->startDate;
         $calendarEvent->end_date = $request->endDate;
         $calendarEvent->reminder = $request->reminder == 'yes' ? true : false;
-        $calendarEvent->alarm_time = new Carbon($request->startDate);
+        $calendarEvent->alarm_time = $request->reminder == 'yes' ? $request->alarm_time : 0;
         return CalendarEvent::createItem($calendarEvent);
     }
 
@@ -51,7 +52,7 @@ class CalendarEventController extends Controller
                 'start_date' => ['required', 'date'],
                 'end_date' => ['nullable', 'date'],
                 'reminder' => [''],
-                'alarm' => ['nullable']
+                'alarm' => ['nullable', 'integer']
             ])->validate();
 
 

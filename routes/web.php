@@ -48,6 +48,18 @@ Route::get('valuta', function () {
     return view('valuta');
 });
 
+Route::get('/general', function () {
+    return redirect('earth');
+});
+
+Route::get('earth', function () {
+    return view('earth');
+});
+
+Route::get('countries', function () {
+    return view('countries');
+});
+
 // Weather CRUD routes
 Route::post('getCurrentWeather', [OpenWeatherController::class, 'getCurrentWeather']);
 Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWeatherPos']);

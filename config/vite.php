@@ -21,7 +21,9 @@ return [
                     'resources/js/clock.js',
                     'resources/js/weather.js',
                     'resources/js/calendar.js',
-                    'resources/js/valuta.js'
+                    'resources/js/valuta.js',
+                    'resources/js/earth.js',
+                    'resources/js/countries.js'
                 ],
                 'ignore' => '/\\.(d\\.ts|json)$/',
             ],

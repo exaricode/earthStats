@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, computed, watch } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import axios from 'axios';
 
 import NavBar from './navigation/NavBar.vue';
@@ -175,13 +175,14 @@ function openCalendarEvent(event) {
 
 function openEventModal(savedEvent) {
     openUpdateEvent.value = true;
+    console.log(savedEvent);
     updateCalendarEvent.value = {
         id: savedEvent.id,
         title: savedEvent.title,
         desc: savedEvent.desc,
         start_date: savedEvent.start_date,
         end_date: savedEvent.end_date,
-        alarm: savedEvent.alarm,
+        alarm_time: savedEvent.alarm_time,
         reminder: savedEvent.reminder
     }
 }

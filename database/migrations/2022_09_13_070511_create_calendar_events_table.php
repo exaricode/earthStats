@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('desc');
             $table->date('start_date');
             $table->date('end_date');
-            $table->date('alarm_time')->nullable();
+            $table->integer('alarm_time')->nullable();
             $table->boolean('reminder');
         });
     }

@@ -27,16 +27,16 @@
                 <fieldset>
                     <legend>Reminder</legend>
                     <label for="reminderYes">
-                        <input type="radio" name="reminder" id="reminderYes" value="yes" >
+                        <input type="radio" name="reminder" id="reminderYes" value="yes" />
                     Yes</label>
                     <label for="reminderNo">
-                        <input type="radio" name="reminder" id="reminderNo" value="no" checked>
+                        <input type="radio" name="reminder" id="reminderNo" value="no" checked />
                     No</label>
                 </fieldset>
             </div>
             <div>
                 <label for="alarmTime">Set alarm</label>
-                <input type="number" name="alarmTime" id="alarmTime" min="0" max="10" step="1">
+                <input type="number" name="alarmTime" id="alarmTime" min="0" max="10" step="1" />
             </div>
             <div>
                 <ButtonSubmit id="addEvent"
@@ -105,7 +105,7 @@ function createCalendarEvent() {
     
     data.endDate = !form[3].value ? form[2].value : form[3].value;
     data.reminder = form[4].checked ? form[4].value : form[5].value
-    data.alarmTime = data.reminder ? form[6].value : 0;
+    data.alarmTime = data.reminder == 'yes' ? form[6].value : 0;
     
     if (!formError.value.title && !formError.value.desc && !formError.value.startDate) {
         axios.post('createCalendarEvent', data)
@@ -150,6 +150,7 @@ fieldset {
 span, button {
     grid-column: 1 / -1;
 }
+
 fieldset > label > input {
     width: fit-content;
 }
@@ -172,6 +173,4 @@ input {
     width: 90%;
     border: 2px inset black
 }
-
-
 </style>

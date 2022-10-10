@@ -73,7 +73,7 @@ function setCityInfo(city) {
 }
 
 function setWeatherImage(thumb) {
-    const imagePath = new URL ('../images/' + thumb + '.png', import.meta.url);
+    const imagePath = new URL ('../images/weather' + thumb + '.png', import.meta.url);
     return imagePath;    
 }
 

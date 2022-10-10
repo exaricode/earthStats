@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { ref } from 'vue';
 const styleObject = ref({
     textShadow: '.5px .5px 2px #050505, -.5px -.5px 2px #050505',
@@ -24,6 +23,6 @@ async function emitCalendarEvent(e) {
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
