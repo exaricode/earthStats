@@ -17,7 +17,7 @@ const props = defineProps({
 
 <style scoped>
 section {
-    width: 90%;
+    width: 100%;
     height: fit-content;
     margin: .5rem auto;
     padding: .5rem 1rem;
@@ -35,7 +35,7 @@ h3 {
 div { 
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 span {

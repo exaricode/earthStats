@@ -1,53 +1,65 @@
 <template>
     <div id="mainGrid">
-        <div class="subGrid one">
-            <template v-for="(e, key, index) in earthInfo" :key="key">
-                <template v-if="index % 3 == 0">
-                    <EarthInfoSection :title="key" :info="e"></EarthInfoSection>
+        <div id="one" class="subGrid">
+            <template v-for="(e) in arrOne">
+                <template v-for="(x, key) in e">
+                    <EarthInfoSection :title="key"  :info="x" />
                 </template>
-                <template v-else></template>
-            </template> 
+            </template>
         </div>
-        <div class="subGrid two">
-            <template v-for="(e, key, index) in earthInfo" :key="key">
-                <template v-if="index % 3 == 1">
-                    <EarthInfoSection :title="key" :info="e"></EarthInfoSection>
+        <div id="two" class="subGrid">
+            <template v-for="(e) in arrTwo">
+                <template v-for="(x, key) in e">
+                    <EarthInfoSection :title="key"  :info="x" />
                 </template>
-                <template v-else></template>
-            </template> 
+            </template>
         </div>
-        <div class="subGrid three">
-            <template v-for="(e, key, index) in earthInfo" :key="key">
-                <template v-if="index % 3 == 2">
-                    <EarthInfoSection :title="key" :info="e"></EarthInfoSection>
+        <div id="three" class="subGrid">
+            <template v-for="(e) in arrThree">
+                <template v-for="(x, key) in e">
+                    <EarthInfoSection :title="key"  :info="x" />
                 </template>
-                <template v-else></template>
-            </template> 
+            </template>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, h } from 'vue';
 import EarthInfoSection from './EarthInfoSection.vue';
 
+const arrOne = ref([]);
+const arrTwo = ref([]);
+const arrThree = ref([]);
 onMounted(() => {
     // get the 3 subGrid divs
-    let temp = document.querySelectorAll('.subGrid');
+    const subGridOne = ref(document.getElementById('one'));
+    const subGridTwo = ref(document.getElementById('two'));
+    const subGridThree = ref(document.getElementById('three'));
 
+    const heightOne = ref(0);
+    const heightTwo = ref(0);
+    const heightThree = ref(0);
     // loop over earthInfo
     for (const e in earthInfo.value) {
-        // get the subGrid div with least offsetHeight and assign current item
-        temp.forEach(elem => {})
-        for(const x in earthInfo.value[e]){
-            console.log(earthInfo.value[e][x])
+        // check the heights, create new object and set height to index length
+        if (heightOne.value <= heightTwo.value && heightOne.value <= heightThree.value){
+            let temp = {};
+            temp[e] = earthInfo.value[e];
+            arrOne.value.push(temp);
+            heightOne.value += earthInfo.value[e].length;
+        } else if (heightTwo.value <= heightThree.value) {
+            let temp = {}
+            temp[e] = earthInfo.value[e];
+            arrTwo.value.push(temp);
+            heightTwo.value += earthInfo.value[e].length;
+        } else {
+            let temp = {};
+            temp[e] = earthInfo.value[e]
+            arrThree.value.push(temp);
+            heightThree.value += earthInfo.value[e].length;
         }
-        
     }
-    /* document.querySelectorAll('.subGrid').forEach(elem => {
-        console.log(elem);
-        
-    }) */
 })
 
 const earthInfo = ref({
@@ -75,6 +87,22 @@ const earthInfo = ref({
             stat: '23h 56min 4sec'
         }
     ], 
+    age: [
+        {
+            name: 'Age',
+            stat: '&plusmn; 4.54 billion years old'
+        }
+    ],   
+    distance: [
+        {
+            name: 'To the moon',
+            stat: '384.400 km'
+        },
+        {
+            name: 'To the sun',
+            stat: '149,600,000 km'
+        }
+    ],
     water: [
         {
             name: 'Total',
@@ -89,23 +117,6 @@ const earthInfo = ref({
             stat: '3%'
         }
     ],
-    distance: [
-        {
-            name: 'To the moon',
-            stat: '384.400 km'
-        },
-        {
-            name: 'To the sun',
-            stat: '149,600,000 km'
-        }
-    ],
-    age: [
-        {
-            name: 'Age',
-            stat: '&plusmn; 4.54 billion years old'
-        }
-    ],
-    
     layers: [
         {
             name: 'Crust',
@@ -152,8 +163,8 @@ const earthInfo = ref({
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    margin: .5rem 1rem;
-    gap: .5rem;
+    margin: .5rem clamp(.2rem, 1vw, 2rem);
+    gap: 1rem;
 }
 
 .subGrid {
