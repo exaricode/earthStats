@@ -20,7 +20,7 @@ main > div {
     background: #000 url('../../images/space2.jpg') repeat center;
     background-size: cover;
     height: 25rem;
-    width: 100vw;
+    width: 100%;
 }
 
 #earthContainer {

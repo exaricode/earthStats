@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import EarthInfoSection from './EarthInfoSection.vue';
 import earthInformation from '../../js/classes/earthInfo.js';
 
@@ -33,6 +33,7 @@ const earthInfo = ref(earthInformation);
 const arrOne = ref([]);
 const arrTwo = ref([]);
 const arrThree = ref([]);
+
 onBeforeMount(() => {
     const heightOne = ref(0);
     const heightTwo = ref(0);

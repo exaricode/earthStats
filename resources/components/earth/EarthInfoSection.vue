@@ -22,8 +22,13 @@ section {
     margin: .5rem auto;
     padding: .5rem 1rem;
     border-radius: 2.5% / 5%;
-    box-shadow: 2px 2px 5px 2px rgb(10,10,10);
+    box-shadow: -2px -2px 5px 0 rgba(10,10,10,1), 2px 2px 5px 0 rgba(10,10,10,1);
     border: 4px outset rgb(20,20,20);
+}
+
+section:hover {
+    transform: scale(1.025);
+    transition: transform linear .5s;
 }
 
 h3 {
