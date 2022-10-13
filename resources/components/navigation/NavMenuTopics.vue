@@ -1,5 +1,5 @@
 <template>
-    <li class="mx-2 uppercase group flow-root relative hover:bg-black hover:text-white"
+    <li class="group"
         @click.self="changePage(title)">
         {{ title }}
         <slot></slot>
@@ -19,6 +19,16 @@ function changePage(title){
 }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+li {
+    display: flow-root;
+    position: relative;
+    margin: 0 .5rem;
+    text-transform: uppercase;
+}
 
+li:hover {
+    background-color: rgba(0,0,0,1);
+    color: rgba(255,255,255,1);
+}
 </style>
