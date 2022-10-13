@@ -4,8 +4,6 @@
             border-b-2 border-b-black border-solid"> {{ legend }}</legend>
         
             <slot name="first" ></slot>
-            <!-- <slot name="second"></slot> -->
-        
     </fieldset>
 </template>
 

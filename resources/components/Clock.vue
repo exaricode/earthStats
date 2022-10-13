@@ -29,6 +29,6 @@ import TimeComponent from './time/TimeComponent.vue';
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

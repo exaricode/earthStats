@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenWeatherController;
 use App\Http\Controllers\CalendarEventController;
 use App\Http\Controllers\ValutaController;
+use App\Http\Controllers\CountriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,11 +67,14 @@ Route::post('getCurrentWeatherPos', [OpenWeatherController::class, 'getCurrentWe
 Route::post('getCurrentWeatherPlace', [OpenWeatherController::class, 'getCurrentWeatherPlace']);
 Route::post('getForeCastWeather', [OpenWeatherController::class, 'getForeCastWeather']);
 
-// Calendar Crud Routes
+// Calendar Crud routes
 Route::get('getCalendarEvents', [CalendarEventController::class, 'getItems']);
 Route::post('createCalendarEvent', [CalendarEventController::class, 'createItem']);
 Route::post('deleteCalendarEvent', [CalendarEventController::class, 'deleteItem']);
 Route::post('updateCalendarEvent', [CalendarEventController::class, 'updateItem']);
 
-// Valuta Crud Routs
+// Valuta Crud routes
 Route::get('loadJson', [ValutaController::class, 'loadJson']);
+
+// Country Crud routes
+Route::get('getCountries', [CountriesController::class, 'getItems']);
