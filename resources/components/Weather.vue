@@ -26,11 +26,11 @@
 <script setup>
 import NavBar from './navigation/NavBar.vue';
 import DragContainer from './draggable/DragContainer.vue';
-import WeatherComponent from './WeatherComponent.vue';
-import ForeCastWeatherComponent from './ForeCastWeatherComponent.vue';
+import WeatherComponent from './weather/WeatherComponent.vue';
+import ForeCastWeatherComponent from './weather/ForeCastWeatherComponent.vue';
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

@@ -27,7 +27,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-import ContainerFieldset from './draggable/ContainerFieldset.vue';
+import ContainerFieldset from '../draggable/ContainerFieldset.vue';
 
 const props = defineProps({
     timezone: String,

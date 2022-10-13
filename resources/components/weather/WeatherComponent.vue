@@ -21,7 +21,7 @@
                 :src="currentWeather.imagePath"
                 alt=""
                 class="inline hover:scale-125" />
-                <img src="../images/windforce.svg" :style="{
+                <img src="../../images/weather/windforce.svg" :style="{
                     width: '20%'
                 }" />
             </div>
@@ -33,7 +33,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
-import ContainerFieldset from './draggable/ContainerFieldset.vue';
+import ContainerFieldset from '../draggable/ContainerFieldset.vue';
 
 const props = defineProps({
     place: String,
@@ -91,7 +91,7 @@ function setWeather(response) {
 }
 
 function setWeatherImage(thumb) {
-    const imagePath = new URL ('../images/' + thumb + '.png', import.meta.url);
+    const imagePath = new URL ('../../images/weather/' + thumb + '.png', import.meta.url);
     return imagePath;    
 }
 

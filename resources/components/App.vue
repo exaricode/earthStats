@@ -22,9 +22,9 @@
 <script setup>
 import NavBar from './navigation/NavBar.vue';
 import DragContainer from './draggable/DragContainer.vue';
-import DateComponent from './DateComponent.vue';
-import TimeComponent from './TimeComponent.vue';
-import WeatherComponent from './WeatherComponent.vue';
+import DateComponent from './date/DateComponent.vue';
+import TimeComponent from './time/TimeComponent.vue';
+import WeatherComponent from './weather/WeatherComponent.vue';
 
 import { ref } from 'vue';
 </script>

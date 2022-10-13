@@ -25,7 +25,7 @@
 <script setup>
 import NavBar from './navigation/NavBar.vue';
 import DragContainer from './draggable/DragContainer.vue';
-import TimeComponent from './TimeComponent.vue';
+import TimeComponent from './time/TimeComponent.vue';
 
 </script>
 

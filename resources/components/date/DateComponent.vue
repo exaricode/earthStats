@@ -12,8 +12,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import ContainerHeader from './draggable/ContainerHeader.vue';
-import ContainerFieldset from './draggable/ContainerFieldset.vue';
+import ContainerHeader from '../draggable/ContainerHeader.vue';
+import ContainerFieldset from '../draggable/ContainerFieldset.vue';
 
 const currentDate = new Date();
 
