@@ -40,6 +40,9 @@ const earthInformation = {
         new EarthInfo('Shape', 'Oblate Spheroid'),
         new EarthInfo('Semi-major axis', '6,378,137.0 m'),
         new EarthInfo('Semi-minor axis', '6,356,752.3 m')
+    ],
+    speed: [
+        new EarthInfo('Orbital speed', '29.78 km/s')
     ]
 }
 

@@ -45,17 +45,17 @@ onBeforeMount(() => {
             let temp = {};
             temp[e] = earthInfo.value[e];
             arrOne.value.push(temp);
-            heightOne.value += earthInfo.value[e].length;
+            heightOne.value += earthInfo.value[e].length + 1;
         } else if (heightTwo.value <= heightThree.value) {
             let temp = {}
             temp[e] = earthInfo.value[e];
             arrTwo.value.push(temp);
-            heightTwo.value += earthInfo.value[e].length;
+            heightTwo.value += earthInfo.value[e].length + 1;
         } else {
             let temp = {};
             temp[e] = earthInfo.value[e]
             arrThree.value.push(temp);
-            heightThree.value += earthInfo.value[e].length;
+            heightThree.value += earthInfo.value[e].length + 1;
         }
     }
 })
