@@ -2,7 +2,7 @@
     <div>
         <nav-bar></nav-bar>
     </div>
-    <main class="flex flex-wrap">
+    <main class="flex flex-wrap justify-around">
         <drag-container>
             <date-component></date-component>
         </drag-container>
