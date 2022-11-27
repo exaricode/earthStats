@@ -45,6 +45,10 @@ Route::get('calendar', function () {
     return view('calendar');
 });
 
+Route::get('/date', function() {
+    return redirect('/calendar');
+});
+
 Route::get('valuta', function () {
     return view('valuta');
 });
