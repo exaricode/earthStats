@@ -2,7 +2,6 @@
     <li class="group"
         @click.self="changePage(title)">
         {{ title }}
-        <slot></slot>
     </li>
 </template>
 
@@ -25,16 +24,19 @@ li {
     padding: .2rem .5rem .5rem;
     text-transform: uppercase;
     background-image: linear-gradient(rgb(165, 243, 252), rgb(103, 232, 249));
-    border: 2px solid rgba(0,0,0,.5);
-    box-shadow: 0 -2px 10px rgba(0,0,0,1);
+    border: .15rem solid rgba(0,0,0,1);
     border-bottom: none;
     border-top-right-radius: 10%;
     border-top-left-radius: 10%;
+    border-top-width: .1rem;
+    box-sizing: content-box;
+    cursor: pointer;
 }
 
 li:hover {
-    transform: scale(1.2);
-    font-weight: 900;
-    transition: font-weight 5s linear;
+    border-radius: 0%;
+    box-shadow: .2rem -.2rem .25rem  black, -.2rem -.2rem .25rem  black;
+    transition: box-shadow 1s linear, border-radius 1s linear;
+
 }
 </style>
